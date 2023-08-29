@@ -1,0 +1,60 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2023-08-19T09:43:20-04:00",
+    "name": "SpongeForge",
+    "author": "parker@parkervcp.com",
+    "description": "A community-driven open source Minecraft: Java Edition modding platform.",
+    "features": [
+        "eula",
+        "java_version",
+        "pid_limit"
+    ],
+    "docker_images": {
+        "Java 8": "ghcr.io\/pterodactyl\/yolks:java_8",
+        "Java 11": "ghcr.io\/pterodactyl\/yolks:java_11",
+        "Java 16": "ghcr.io\/pterodactyl\/yolks:java_16",
+        "Java 17": "ghcr.io\/pterodactyl\/yolks:java_17",
+        "Java 18": "ghcr.io\/pterodactyl\/yolks:java_18"
+    },
+    "file_denylist": [],
+    "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}}",
+    "config": {
+        "files": "{\r\n    \"server.properties\": {\r\n        \"parser\": \"properties\",\r\n        \"find\": {\r\n            \"server-ip\": \"0.0.0.0\",\r\n            \"server-port\": \"{{server.build.default.port}}\",\r\n            \"query.port\": \"{{server.build.default.port}}\"\r\n        }\r\n    }\r\n}",
+        "startup": "{\r\n    \"done\": \")! For help, type \",\r\n    \"userInteraction\": [\r\n        \"Go to eula.txt for more info.\"\r\n    ]\r\n}",
+        "logs": "{}",
+        "stop": "stop"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n# SpongeForge Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\napt update\r\napt install -y jq curl\r\n\r\nmkdir -p \/mnt\/server\r\ncd \/mnt\/server || exit 1\r\n\r\n#Adding .jar when not ending by SERVER_JARFILE\r\nif [[ ! ${SERVER_JARFILE} = *\\.jar ]]; then\r\n  SERVER_JARFILE=\"${SERVER_JARFILE}.jar\"\r\nfi\r\n\r\n\r\nif [ -z \"${SF_VERSION}\" ] || [ \"$(curl -s https:\/\/repo.spongepowered.org\/maven\/org\/spongepowered\/spongeforge\/maven-metadata.xml | grep \"<version>\" | sed -E 's\/[[:space:]]+<latest>|<\\\/latest>\/\/g' | grep \"${SV_VERSION}\")\" != \"${SV_VERSION}\" ]; then\r\n    echo -e \"defaulting to recommended\"\r\n    SF_VERSION=\"recommended\"\r\nfi\r\n\r\nif [ \"${SF_VERSION}\" == \"recommended\" ]; then\r\n    echo -e \"using recommended SpongeForge version\"\r\n    SV_VERSION=$(curl -s https:\/\/repo.spongepowered.org\/maven\/org\/spongepowered\/spongeforge\/maven-metadata.xml | grep \"<latest>\" | sed -E 's\/[[:space:]]+<latest>|<\\\/latest>\/\/g')\r\n    \r\n    echo -e \"found SpongeForge Version ${SF_VERSION}\"\r\n    SF_DL_LINK=\"https:\/\/repo.spongepowered.org\/repository\/maven-releases\/org\/spongepowered\/spongeforge\/${SV_VERSION}\/spongeforge-${SV_VERSION}-universal.jar\"\r\n    FORGE_DOWNLOAD_VERSION=$(echo $SV_VERSION | sed -E 's\/([[:digit:]\\.]+)-([[:digit:]\\.]+)-([[:digit:]\\.]+)-([[:alnum:]-]+)\/\\2\/g')\r\n    MC_VERSION=$(echo $SV_VERSION | sed -E 's\/([[:digit:]\\.]+)-([[:digit:]\\.]+)-([[:digit:]\\.]+)-([[:alnum:]-]+)\/\\1\/g')\r\n    if [[ \"${FORGE_DOWNLOAD_VERSION}\" != *\".\"* ]]; then\r\n      FORGE_DOWNLOAD_VERSION=$(curl \"https:\/\/files.minecraftforge.net\/net\/minecraftforge\/forge\/index_${MC_VERSION}.html\" | grep \"${FORGE_DOWNLOAD_VERSION}\" | grep \"universal.jar\" | grep -v \"adfoc\" | grep -v \"info-link\" | sed -E 's\/^[[:space:]]+<br><a href=\\\"https:\\\/\\\/maven\\.minecraftforge\\.net\\\/net\\\/minecraftforge\\\/forge\\\/\/\/g' | sed -E 's\/([[:digit:].]+)-([[:digit:].]+)\\\/forge.*-universal.jar\\\">\\(Direct Download\\)<\\\/a>$\/\\2\/g')\r\n    fi\r\n    echo -e \"found Forge Version ${FORGE_VERSION}\"\r\nelif [ \"${SF_VERSION}\" == \"latest\" ]; then\r\n    echo -e \"using latest SpongForge version\"\r\n    SV_VERSION=$(curl -s https:\/\/repo.spongepowered.org\/maven\/org\/spongepowered\/spongeforge\/maven-metadata.xml | grep \"<latest>\" | sed -E 's\/[[:space:]]+<latest>|<\\\/latest>\/\/g')\r\n    echo -e \"found SpongeForge Version ${SF_VERSION}\"\r\n    SF_DL_LINK=\"https:\/\/repo.spongepowered.org\/repository\/maven-releases\/org\/spongepowered\/spongeforge\/${SV_VERSION}\/spongeforge-${SV_VERSION}-universal.jar\"\r\n    FORGE_DOWNLOAD_VERSION=$(echo $SV_VERSION | sed -E 's\/([[:digit:]\\.]+)-([[:digit:]\\.]+)-([[:digit:]\\.]+)-([[:alnum:]-]+)\/\\2\/g')\r\n    MC_VERSION=$(echo $SV_VERSION | sed -E 's\/([[:digit:]\\.]+)-([[:digit:]\\.]+)-([[:digit:]\\.]+)-([[:alnum:]-]+)\/\\1\/g')\r\n    if [[ \"${FORGE_DOWNLOAD_VERSION}\" != *\".\"* ]]; then\r\n      FORGE_DOWNLOAD_VERSION=$(curl \"https:\/\/files.minecraftforge.net\/net\/minecraftforge\/forge\/index_${MC_VERSION}.html\" | grep \"${FORGE_DOWNLOAD_VERSION}\" | grep \"universal.jar\" | grep -v \"adfoc\" | grep -v \"info-link\" | sed -E 's\/^[[:space:]]+<br><a href=\\\"https:\\\/\\\/maven\\.minecraftforge\\.net\\\/net\\\/minecraftforge\\\/forge\\\/\/\/g' | sed -E 's\/([[:digit:].]+)-([[:digit:].]+)\\\/forge.*-universal.jar\\\">\\(Direct Download\\)<\\\/a>$\/\\2\/g')\r\n    fi\r\nelse\r\n    echo -e \"found SpongeForge Version ${SF_VERSION}\"\r\n    SF_DL_LINK=\"https:\/\/repo.spongepowered.org\/repository\/maven-releases\/org\/spongepowered\/spongeforge\/${SV_VERSION}\/spongeforge-${SV_VERSION}-universal.jar\"\r\n    FORGE_DOWNLOAD_VERSION=$(echo $SV_VERSION | sed -E 's\/([[:digit:]\\.]+)-([[:digit:]\\.]+)-([[:digit:]\\.]+)-([[:alnum:]-]+)\/\\2\/g')\r\n    MC_VERSION=$(echo $SV_VERSION | sed -E 's\/([[:digit:]\\.]+)-([[:digit:]\\.]+)-([[:digit:]\\.]+)-([[:alnum:]-]+)\/\\1\/g')\r\n    if [[ \"${FORGE_DOWNLOAD_VERSION}\" != *\".\"* ]]; then\r\n      FORGE_DOWNLOAD_VERSION=$(curl \"https:\/\/files.minecraftforge.net\/net\/minecraftforge\/forge\/index_${MC_VERSION}.html\" | grep \"${FORGE_DOWNLOAD_VERSION}\" | grep \"universal.jar\" | grep -v \"adfoc\" | grep -v \"info-link\" | sed -E 's\/^[[:space:]]+<br><a href=\\\"https:\\\/\\\/maven\\.minecraftforge\\.net\\\/net\\\/minecraftforge\\\/forge\\\/\/\/g' | sed -E 's\/([[:digit:].]+)-([[:digit:].]+)\\\/forge.*-universal.jar\\\">\\(Direct Download\\)<\\\/a>$\/\\2\/g')\r\n    fi\r\n    echo -e \"found Forge Version ${FORGE_VERSION}\"\r\nfi\r\n\r\nFORGE_DL_LINK=\"https:\/\/maven.minecraftforge.net\/net\/minecraftforge\/forge\/${MC_VERSION}-${FORGE_DOWNLOAD_VERSION}\/forge-${MC_VERSION}-${FORGE_DOWNLOAD_VERSION}\"\r\n\r\nif [ -f server.jar ] && [ \"$(sha1sum server.jar | awk '{ print $1 }')\" == \"$(curl -s \"${FORGE_DL_LINK}-universal.jar.sha1\")\" ]; then\r\n    echo -e \"Already have the correct forge version\"\r\nelse\r\n    echo -e \"Downloading forge version ${FORGE_VERSION}\"\r\n    echo -e \"running: curl -s -o installer.jar -o ${FORGE_DL_LINK}-installer.jar\"\r\n    curl -s -o installer.jar \"${FORGE_DL_LINK}-installer.jar\"\r\n    echo -e \"running: curl -s -o ${SERVER_JARFILE} -o ${FORGE_DL_LINK}-universal.jar\"\r\n    curl -s -o \"${SERVER_JARFILE}\" \"${FORGE_DL_LINK}-universal.jar\"\r\n    java -jar installer.jar --installServer\r\n    rm installer.jar \"forge-${MC_VERSION}-${FORGE_DOWNLOAD_VERSION}-universal.jar\"\r\nfi\r\n\r\nif [ ! -d \/mnt\/server\/mods\/ ]; then\r\n    echo -e \"making mods directory\"\r\n    mkdir -p \/mnt\/server\/mods\/\r\nfi\r\n\r\nfor file in \/mnt\/server\/mods\/spongeforge*.jar; do\r\n  if [ -e \"$file\" ]; then\r\n    mkdir -p \/mnt\/server\/mods\/old\/\r\n    mv -f \/mnt\/server\/mods\/spongeforge*.jar \/mnt\/server\/mods\/old\/spongeforge*.jar\r\n    break\r\n  fi\r\ndone\r\n\r\necho -e \"running: curl -s ${SF_DL_LINK} -o \/mnt\/server\/mods\/spongeforge-${SF_VERSION}.jar\"\r\ncurl -s \"${SF_DL_LINK}\" -o \"\/mnt\/server\/mods\/spongeforge-${SF_VERSION}.jar\"\r\n\r\nif [ ! -f server.properties ]; then\r\n    echo -e \"Downloading MC server.properties\"\r\n    curl -o server.properties https:\/\/raw.githubusercontent.com\/parkervcp\/eggs\/master\/game_eggs\/minecraft\/java\/server.properties\r\nfi\r\n\r\necho -e \"Install for SpongeForge is complete\"",
+            "container": "openjdk:8-jre-slim",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Server Jar File",
+            "description": "The name of the Jarfile to use when running Forge Mod.",
+            "env_variable": "SERVER_JARFILE",
+            "default_value": "server.jar",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|regex:\/^([\\w\\d._-]+)(\\.jar)$\/",
+            "field_type": "text"
+        },
+        {
+            "name": "SpongeForge Version",
+            "description": "Example 1.12.2-2825-7.1.6\r\n\r\nIf the version fails it defaults to recommended",
+            "env_variable": "SF_VERSION",
+            "default_value": "recommended",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        }
+    ]
+}
