@@ -2,7 +2,6 @@
 
 ## General rules
 
-
 1. Keep it simple.
     We don't need 8 miles of install script.
 
@@ -49,4 +48,4 @@ This is to maintain a clean repo that others can pull and be fully aware of what
 
 ### Make a branch and do your work in there
 
-I have been getting messy PR's due to people always PRing from their master branch. Please make a seperate branch and PR from there.
+I have been getting messy PR's due to people always PRing from their master branch. Please make a separate branch and PR from there.
