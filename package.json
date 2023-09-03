@@ -1,0 +1,22 @@
+{
+  "name": "pterodactyl_eggs",
+  "version": "1.0.0",
+  "description": "I am working on adding a large collection of public eggs for the Pterodactyl community.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "cross-env ESLINT_USE_FLAT_CONFIG=true eslint -c eslint.config.mjs .",
+    "format": "prettier-eslint \"src/**/*.js\"",
+    "build": "node build.js"
+  },
+  "type": "module",
+  "keywords": ["pterodactyl", "egg", "game", "server"],
+  "author": {
+    "name" : "Neko Boi Nick"                         ,
+    "url"  : "https://github.com/thakyZ"             ,
+    "email": "950594+thakyZ@users.noreply.github.com"
+  },
+  "contributors": [
+    {"name": "Dane Everitt", "email": "dane@daneeveritt.com"}
+  ],
+  "license": "MIT"
+}
