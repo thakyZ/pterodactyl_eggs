@@ -1,0 +1,132 @@
+{
+  "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+  "meta": {"version": "PTDL_v2", "update_url": null},
+  "exported_at": "2023-09-03T18:16:09-04:00",
+  "name": "All The Mods",
+  "author": "admin@nekogaming.xyz",
+  "description": "Installs an All The Mods Server. Minecraft All The Mods is a modpack brand.",
+  "features": ["eula", "java_version", "pid_limit"],
+  "docker_images": {
+    "Java 17": "ghcr.io\/thakyz\/yolks:java_17",
+    "Java 16": "ghcr.io\/thakyz\/yolks:java_16",
+    "Java 11": "ghcr.io\/thakyz\/yolks:java_11",
+    "Java 8" : "ghcr.io\/thakyz\/yolks:java_8"
+  },
+  "file_denylist": [],
+  "startup": ".\/installserver.sh",
+  "config": {
+    "files": "{\r\n    \"setup\/server.properties\": {\r\n        \"parser\": \"properties\",\r\n        \"find\": {\r\n            \"server-ip\": \"0.0.0.0\",\r\n            \"server-port\": \"{{server.build.default.port}}\",\r\n            \"query.port\": \"{{server.build.default.port}}\"\r\n        }\r\n    }\r\n}",
+    "startup": "{\r\n    \"done\": \")! For help, type \"\r\n}",
+    "logs": "{}",
+    "stop": "stop"
+  },
+  "scripts": {
+    "installation": {
+      "script"    : ""                       ,
+      "container" : "openjdk:17.0.2-jdk-slim",
+      "entrypoint": "bash"
+    }
+  },
+  "variables": [
+    {
+      "name": "Server Jar File",
+      "description": "The name of the Jarfile to use when running Forge version below 1.17.",
+      "env_variable": "SERVER_JARFILE",
+      "default_value": "server.jar",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|regex:\/^([\\w\\d._-]+)(\\.jar)$\/",
+      "field_type": "text"
+    },
+    {
+      "name": "Minecraft Version",
+      "description": "The version of minecraft you want to install for.\r\n\r\nLeaving latest will install the latest recommended version.",
+      "env_variable": "MC_VERSION",
+      "default_value": "latest",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|regex:\/^\\d+\\.\\d+\\.\\d+$\/i|max:10",
+      "field_type": "text"
+    },
+    {
+      "name": "Build Type",
+      "description": "The type of server jar to download from forge.\r\n\r\nValid types are \"recommended\" and \"latest\".",
+      "env_variable": "BUILD_TYPE",
+      "default_value": "recommended",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string|in:recommended,latest",
+      "field_type": "text"
+    },
+    {
+      "name": "Forge Version",
+      "description": "Gets an exact version.\r\n\r\nEx. 31.2.4\r\n\r\nOverrides MC_VERSION and BUILD_TYPE. If it fails to download the server files it will fail to install.",
+      "env_variable": "FORGE_VERSION",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "nullable|regex:\/^\\d+\\.\\d+\\.\\d+$\/i|max:10",
+      "field_type": "text"
+    },
+    {
+      "name": "Max Ram",
+      "description": "The maximum amount of ram to allocate",
+      "env_variable": "MAX_RAM",
+      "default_value": "6G",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|regex:\/^\\d{1,4}[mg]$\/i|min:2|max:5",
+      "field_type": "text"
+    },
+    {
+      "name": "MIN_RAM",
+      "description": "Minimum ram to allocate to the server",
+      "env_variable": "MIN_RAM",
+      "default_value": "2G",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "nullable|regex:\/^\\d{1,4}[mg]$\/i|min:2|max:5",
+      "field_type": "text"
+    },
+    {
+      "name": "Modpack Url",
+      "description": "The modpack to download and install",
+      "env_variable": "MODPACK_URL",
+      "default_value": "https:\/\/media.forgecdn.net\/files\/3491\/186\/All+the+Mods+7-0.0.21.zip",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|url|max:128",
+      "field_type": "text"
+    },
+    {
+      "name": "Modpack Format",
+      "description": "The format the modpack is in.\r\n\r\nValid types are: \"curseforge\", \"curse\", \"curseid\", \"zip\", or \"zipfile\"",
+      "env_variable": "MODPACK_FORMAT",
+      "default_value": "curseforge",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string|in:curseforge,curse,curseid,zip,zipfile",
+      "field_type": "text"
+    },
+    {
+      "name": "Server Name",
+      "description": "Name of the mod pack, that is displayed in various places where it fits",
+      "env_variable": "SERVER_NAME",
+      "default_value": "Example Modpack",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string",
+      "field_type": "text"
+    },
+    {
+      "name": "Server Description",
+      "description": "Description of the mod pack, that is displayed in various places where it fits",
+      "env_variable": "SERVER_DESCRIPTION",
+      "default_value": "This is a awesome modpack about making examples.",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string",
+      "field_type": "text"
+    }
+  ]
+}
