@@ -33,16 +33,18 @@ If you are reading this it looks like you are looking to add an egg to your serv
 [Minecraft](/game_eggs/minecraft)
 
 * [Java](/game_eggs/minecraft/java) Servers for Java Minecraft
-  * [All the Mods](/game_eggs/minecraft/java/allthemods)
+  * [All The Mods](/game_eggs/minecraft/java/allthemods)
   * [SpongeForge](/game_eggs/minecraft/java/spongeforge)
   * [SpongeVanilla](/game_eggs/minecraft/java/spongevanilla)
 
-* [Terraria](/game_eggs/terraria) Servers for Terraria
-  * [tModLoader](game_eggs/terraria/tmodloader)
+[Terraria](/game_eggs/terraria) Servers for Terraria
 
-* [Starbound](/game_eggs/starbound) Servers for Starbound
-  * [Starbound](game_eggs/starbound/game)
-  * [StarrPy3k](game_eggs/starbound/starrpy)
+* [tModLoader](game_eggs/terraria/tmodloader)
+
+[Starbound](/game_eggs/starbound) Servers for Starbound
+
+* [Starbound](game_eggs/starbound/game)
+* [StarrPy3k](game_eggs/starbound/starrpy)
 
 ## [System](/system/)
 
