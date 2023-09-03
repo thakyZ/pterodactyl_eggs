@@ -52,3 +52,7 @@ If you are reading this it looks like you are looking to add an egg to your serv
 
 * [Flame](/system/flame)
 * [Generic](/system/generic)
+
+## Other Links
+
+[Pterodactyl Yolks](https://github.com/thakyZ/yolks)
