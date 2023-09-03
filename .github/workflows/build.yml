@@ -1,0 +1,21 @@
+name: build eggs
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 1 * *"
+  push:
+    branches:
+      - master
+    paths:
+      - ./**/src/**
+jobs:
+  push:
+    name: "eggs:${{ matrix.tag }}"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        tag:
+          - allthemods
+    steps:
+      - uses: actions/checkout@v3
