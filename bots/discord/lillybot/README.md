@@ -1,8 +1,9 @@
-# Discord Bots
+# LillyBotJS
 
-## Some of these bots support other services but are primarily Discord bots
+## Their [Github](https://github.com/thakyZ/LillyBotJS)
 
-### [LillyBotJS](lillybot)
+A Discord bot for Neko Gaming
 
-[LillyBotJS](https://github.com/thakyz/LillyBotJS)
-A custom discord bot.
+## Server Ports
+
+There are no ports required for the lillybotjs
