@@ -39,12 +39,16 @@ If you are reading this it looks like you are looking to add an egg to your serv
 
 [Terraria](/game_eggs/terraria) Servers for Terraria
 
-* [tModLoader](game_eggs/terraria/tmodloader)
+* [tModLoader](/game_eggs/terraria/tmodloader)
 
 [Starbound](/game_eggs/starbound) Servers for Starbound
 
-* [Starbound](game_eggs/starbound/game)
-* [StarrPy3k](game_eggs/starbound/starrpy)
+* [Starbound](/game_eggs/starbound/game)
+* [StarrPy3k](/game_eggs/starbound/starrpy)
+
+[SteamdCMD Servers](/game_eggs/steamcmd_servers)
+
+* [Palworld](/game_eggs/steamcmd_servers/Palworld)
 
 ## [System](/system/)
 
