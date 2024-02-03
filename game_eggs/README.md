@@ -15,3 +15,7 @@
 
 * [Starbound](game_eggs/starbound/game)
 * [StarrPy3k](game_eggs/starbound/starrpy)
+
+[SteamdCMD Servers](/game_eggs/steamcmd_servers)
+
+* [Palworld](/game_eggs/steamcmd_servers/Palworld)
