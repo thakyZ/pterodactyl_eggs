@@ -58,7 +58,7 @@ if __name__ == "__main__":
     file_argument = argparse.add_argument("--file", "-f", nargs="+", dest="assets", help="<Required> Set flag", type=validate_regex, required=True)
     args: Namespace = argparse.parse_args()
 
-    api_key: str = fetch_api_key()
+    api_key: str = fetch_api_key().rstrip()
 
     url: str = f"http://api.github.com/repos/{args.repo[1]}/{args.repo[2]}/releases"
     headers: dict[str, str] = {
