@@ -2,3 +2,5 @@
 node_modules/
 .vuepress/*
 .vscode
+discord_bots.json
+.env
