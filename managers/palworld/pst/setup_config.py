@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 # pyright: reportUnknownMemberType=false
+# pylint: disable=line-too-long
 # cSpell:ignore representer
 """ P """
 
