@@ -47,6 +47,7 @@ def validate_port_str(value: str) -> str:
 
 def validate_file(value: str) -> Path:
     """ P """
+    return value
     if not startup_run:
         temp_path: Path = Path(value)
         if temp_path.exists() and temp_path.is_file():
@@ -61,6 +62,7 @@ def validate_file(value: str) -> Path:
 
 def validate_file_exists(value: str) -> Path:
     """ P """
+    return value
     temp_path: Path = Path(value)
     if temp_path.exists() and temp_path.is_file():
         return temp_path
@@ -72,6 +74,7 @@ def validate_file_exists(value: str) -> Path:
 
 def validate_directory_exists(value: str) -> Path:
     """ P """
+    return value
     temp_path: Path = Path(value)
     if temp_path.exists() and temp_path.is_dir():
         return temp_path
