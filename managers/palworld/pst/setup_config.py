@@ -3,7 +3,7 @@
 # pyright: reportUnknownMemberType=false
 # pylint: disable=line-too-long
 # cSpell:ignore representer
-""" P """
+""" Temporary Module Docstring """
 
 import re
 from re import Pattern
@@ -20,7 +20,7 @@ from yaml import YAMLError
 startup_run: bool = str(os.getenv("installing")) == "true"
 
 def validate_bool_str(value: str) -> bool:
-    """ P """
+    """ Temporary Method Docstring """
     if value.lower() == "true":
         return True
     if value.lower() != "false":
@@ -28,25 +28,25 @@ def validate_bool_str(value: str) -> bool:
     return False
 
 def validate_int(value: str) -> int:
-    """ P """
+    """ Temporary Method Docstring """
     return int(value, base=10)
 
 def validate_ip_str(value: str) -> str:
-    """ P """
+    """ Temporary Method Docstring """
     regex: Pattern[str] = re.compile(r"^(?:(?:(?:25[0-5]|(?:2[0-4]|1\d|[1-9]|)\d)(?:\.(?!$)|$)){4}|(?:(?:[a-zA-Z]|[a-zA-Z][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*(?:[A-Za-z]|[A-Za-z][A-Za-z0-9\-]*[A-Za-z0-9])|(?:::01))$")
     if regex.match(value) is None:
         raise ArgumentTypeError("Argument of type ip address does not match a required string")
     return value
 
 def validate_port_str(value: str) -> str:
-    """ P """
+    """ Temporary Method Docstring """
     temp_int: int = int(value, base=10)
     if temp_int < 255 or temp_int > 65535:
         raise ArgumentTypeError("Argument of type port needs to be greater than 255 and less than 65535")
     return value
 
 def validate_file(value: str) -> Path:
-    """ P """
+    """ Temporary Method Docstring """
     return value
     if not startup_run:
         temp_path: Path = Path(value)
@@ -61,7 +61,7 @@ def validate_file(value: str) -> Path:
     return Path(value)
 
 def validate_file_exists(value: str) -> Path:
-    """ P """
+    """ Temporary Method Docstring """
     return value
     temp_path: Path = Path(value)
     if temp_path.exists() and temp_path.is_file():
@@ -73,7 +73,7 @@ def validate_file_exists(value: str) -> Path:
     raise ArgumentTypeError(f"File {temp_path} has some other issue on the file system.")
 
 def validate_directory_exists(value: str) -> Path:
-    """ P """
+    """ Temporary Method Docstring """
     return value
     temp_path: Path = Path(value)
     if temp_path.exists() and temp_path.is_dir():
@@ -88,20 +88,20 @@ if __name__ == "__main__":
     argparse = ArgumentParser(prog="setup_config", description="Parses arguments from command line and writes to a yaml file.")
     argparse.add_argument("--io", type=validate_file_exists, required=True)
     web_argument_group = argparse.add_argument_group("web", description="")
-    web_argument_group.add_argument("--web_password", "-p", type=str, required=True)
-    web_argument_group.add_argument("--web_tls", "-t", type=validate_bool_str, required=True)
+    web_argument_group.add_argument("--web_password", "-p", type=str, required=False)
+    web_argument_group.add_argument("--web_tls", "-t", type=validate_bool_str, required=False)
     web_argument_group.add_argument("--web_cert_path", "-c", type=validate_file, required=False)
     web_argument_group.add_argument("--web_key_path", "-k", type=validate_file, required=False)
     rcon_argument_group = argparse.add_argument_group("rcon", description="")
-    rcon_argument_group.add_argument("--rcon_address", "-a", type=validate_ip_str, required=True)
-    rcon_argument_group.add_argument("--rcon_port", "-P", type=validate_port_str, required=True)
-    rcon_argument_group.add_argument("--rcon_password", "-A", type=str, required=True)
-    rcon_argument_group.add_argument("--rcon_timeout", "-T", type=validate_int, required=True)
-    rcon_argument_group.add_argument("--rcon_sync_interval", "-s", type=validate_int, required=True)
+    rcon_argument_group.add_argument("--rcon_address", "-a", type=validate_ip_str, required=False)
+    rcon_argument_group.add_argument("--rcon_port", "-P", type=validate_port_str, required=False)
+    rcon_argument_group.add_argument("--rcon_password", "-A", type=str, required=False)
+    rcon_argument_group.add_argument("--rcon_timeout", "-T", type=validate_int, required=False)
+    rcon_argument_group.add_argument("--rcon_sync_interval", "-s", type=validate_int, required=False)
     save_argument_group = argparse.add_argument_group("save", description="")
-    save_argument_group.add_argument("--save_path", "-d", type=validate_directory_exists, required=True)
-    save_argument_group.add_argument("--save_decode_path", "-D", type=validate_file_exists, required=True)
-    save_argument_group.add_argument("--save_sync_interval", "-S", type=validate_int, required=True)
+    save_argument_group.add_argument("--save_path", "-d", type=validate_directory_exists, required=False)
+    save_argument_group.add_argument("--save_decode_path", "-D", type=validate_file_exists, required=False)
+    save_argument_group.add_argument("--save_sync_interval", "-S", type=validate_int, required=False)
     args: Namespace = argparse.parse_args()
 
     config: Path = Path(args.io)
@@ -118,28 +118,45 @@ if __name__ == "__main__":
         raise YAMLError("Failed to parse config file.")
 
     def convert_to_blank_if_none(value: Any | None) -> str:
-        """ a """
+        """ Temporary Method Docstring """
         if value is None:
             return ""
         return str(value)
 
     def literal_presenter(dumper: Dumper, data: Any) -> ScalarNode:
-        """ a """
+        """ Temporary Method Docstring """
         if isinstance(data, str) and "\n" in data:
             return dumper.represent_scalar("tag:yaml.org,2002:str", data, style="|")
         return dumper.represent_scalar("tag:yaml.org,2002:str", data, style="\"")
 
-    yaml_data["web"]["password"] = args.web_password
-    yaml_data["web"]["tls"] = args.web_tls
-    yaml_data["web"]["cert_path"] = convert_to_blank_if_none(args.web_cert_path)
-    yaml_data["web"]["key_path"] = convert_to_blank_if_none(args.web_key_path)
-    yaml_data["rcon"]["address"] = f"{args.rcon_address}:{args.rcon_port}"
-    yaml_data["rcon"]["password"] = args.rcon_password
-    yaml_data["rcon"]["timeout"] = args.rcon_timeout
-    yaml_data["rcon"]["sync_interval"] = args.rcon_sync_interval
-    yaml_data["save"]["path"] = convert_to_blank_if_none(args.save_path)
-    yaml_data["save"]["decode_path"] = convert_to_blank_if_none(args.save_decode_path)
-    yaml_data["save"]["sync_interval"] = args.save_sync_interval
+    if args.web_password is not None:
+        yaml_data["web"]["password"] = args.web_password
+    if args.web_tls is not None:
+        yaml_data["web"]["tls"] = args.web_tls
+    if args.web_cert_path is not None:
+        yaml_data["web"]["cert_path"] = convert_to_blank_if_none(args.web_cert_path)
+    if args.web_key_path is not None:
+        yaml_data["web"]["key_path"] = convert_to_blank_if_none(args.web_key_path)
+    if args.rcon_address is not None and args.rcon_port is not None:
+        yaml_data["rcon"]["address"] = f"{args.rcon_address}:{args.rcon_port}"
+    elif args.rcon_address is not None:
+        current_port = yaml_data["rcon"]["address"].split(":")[1]
+        yaml_data["rcon"]["address"] = f"{args.rcon_address}:{current_port}"
+    elif args.rcon_port is not None:
+        current_address = yaml_data["rcon"]["address"].split(":")[0]
+        yaml_data["rcon"]["address"] = f"{current_address}:{args.rcon_port}"
+    if args.rcon_password is not None:
+        yaml_data["rcon"]["password"] = args.rcon_password
+    if args.rcon_timeout is not None:
+        yaml_data["rcon"]["timeout"] = args.rcon_timeout
+    if args.rcon_sync_interval is not None:
+        yaml_data["rcon"]["sync_interval"] = args.rcon_sync_interval
+    if args.save_path is not None:
+        yaml_data["save"]["path"] = convert_to_blank_if_none(args.save_path)
+    if args.save_decode_path is not None:
+        yaml_data["save"]["decode_path"] = convert_to_blank_if_none(args.save_decode_path)
+    if args.save_sync_interval is not None:
+        yaml_data["save"]["sync_interval"] = args.save_sync_interval
 
     yaml.add_representer(str, literal_presenter)
 
