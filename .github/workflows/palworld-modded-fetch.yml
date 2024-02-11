@@ -79,9 +79,11 @@ jobs:
             }
 
             If ($Data.Documentation -lt $Data.Current) {
-              $SelectedString = (Get-Content $InFilePath | Select-String -Pattern "^.+winmm\.dll.+\[[^\]\(\)\[]+\]\((.*)\).+$");
-              If ($Null -ne $SelectedString -and ($SelectedString | Get-Member).Name -Contains "Matches" -and $SelectString.Matches.Groups.Count -gt 1) {
-                $DownloadLink = $SelectString.Matches.Groups[1].Value;
+              $SelectedString = ((Get-Content $InFilePath|Select-String -Pattern "\[([^\]]+)\]\((https:\/\/[^\)]+)\)" -AllMatches).Matches.Groups|Select-Object @(@{Name="Alt";Expression={$Item = $_;Return @(($Item|Where-Object{$Group=($_ | Get-Member).Name;If($Group -Contains "Groups"){Return $True};Return $False}).Groups[1].Value)}},@{Name="Uri";Expression={$Item=$_;Return @(($Item|Where-Object{$Group=($_|Get-Member).Name;If($Group -Contains "Groups"){Return $True};Return $False}).Groups[2].Value)}})|Where-Object{If($Null -eq $_ -or $Null -eq $_.Uri){Return $False};Return $_.Uri.EndsWith("winmm.zip")});
+              If ($Null -ne $SelectedString) {
+                $DownloadLink = $SelectString.Url;
+              } Else {
+                Throw "Failed to get Uri to download winmm.zip"
               }
               Try {
                 $Web = (Invoke-WebRequest -Uri "$($DownloadLink)" -UserAgent ([Microsoft.PowerShell.Commands.PSUserAgent]::Chrome) -SkipHttpErrorCheck -ErrorAction SilentlyContinue);
