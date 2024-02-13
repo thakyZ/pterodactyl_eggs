@@ -4,7 +4,7 @@ script_directory=$(dirname "${current_script}")
 
 main_function() {
 
-  python3 "${script_directory}/setup_config.py" --rcon_address "${INTERNAL_IP}" --io "./config.yaml"
+  python3 "${script_directory}/setup_config.py" --rcon_address "${INTERNAL_IP}" --io "${script_directory}/config.yaml"
 
   "${script_directory}/pst" &
   sleep 100
