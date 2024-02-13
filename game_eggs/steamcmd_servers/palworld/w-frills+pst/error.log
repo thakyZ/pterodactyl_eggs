@@ -1,4 +1,3 @@
-container@pterodactyl~ Server marked as offline...
 [Pterodactyl Daemon]: Checking server disk space usage, this could take a few seconds...
 [Pterodactyl Daemon]: Updating process configuration files...
 [Pterodactyl Daemon]: Ensuring file permissions are set correctly, this could take a few seconds...
@@ -145,89 +144,506 @@ warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32
 ------------------------------------------------------
 vcrun2022 already installed, skipping
 :/home/container$ (while read cmd; do rcon -s -a "localhost:$RCON_PORT" -p "$ADMIN_PASSWORD" "$cmd";done) < /dev/stdin & /home/container/RunPalServer.sh
-WINEDLLOVERRIDES="mscoree,mshtml="
-054c:fixme:ntdll:NtQuerySystemInformation info_class SYSTEM_PERFORMANCE_INFORMATION
-054c:fixme:nls:get_dummy_preferred_ui_language (0x8 0x409 00007FFFFEC7C694 0000000000000000 00007FFFFEC7C690) returning a dummy value (current locale)
-054c:fixme:nls:get_dummy_preferred_ui_language (0x8 0x409 00007FFFFEC7C694 00007FBB5CC12B20 00007FFFFEC7C690) returning a dummy value (current locale)
-054c:fixme:advapi:RegisterEventSourceW ((null),L"Pal-PID1372"): stub
-054c:fixme:gameux:GameExplorerImpl_VerifyAccess (00007FBB715A7630, L"Z:\\home\\container\\PalServer\\Pal\\Binaries\\Win64\\PalServer-Win64-Test-Cmd.exe", 00007FFFFEC7C380)
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
-Exited with exit code: 
+pwd=/home/container/PalServer/Pal/Binaries/Win64
+WINEDLLOVERRIDES="mscoree,mshtml=,wmapi=n,b"
+python3: can't open file '/home/container/PalServer/Pal/Binaries/Win64/./setup_config.py': [Errno 2] No such file or directory
+/home/container/PST/run.sh: line 5: ./pst: No such file or directory
+[03:36:46] Console created
+[03:36:46] UE4SS - v3.0.0 Beta #0 - Git SHA #5319a0e
+[03:36:46] UE4SS Build Configuration: Game__Shipping__Win64 (MSVC)
+[03:36:46] Setting up mods...
+[03:36:46] Starting mods (from mods.txt load order)...
+[03:36:46] Starting mods (from enabled.txt, no defined load order)...
+[03:36:46] No specific game configuration found, using default configu
+ration file
+[03:36:46] Config: Z:\home\container\PalServer\Pal\Binaries\Win64\UE4S
+S-settings.ini
+
+[03:36:46] root directory: Z:\home\container\PalServer\Pal\Binaries\Wi
+n64
+[03:36:46] working directory: Z:\home\container\PalServer\Pal\Binaries
+\Win64
+[03:36:46] game executable directory: Z:\home\container\PalServer\Pal\
+Binaries\Win64
+[03:36:46] game executable: Z:\home\container\PalServer\Pal\Binaries\W
+in64\PalServer-Win64-Test-Cmd.exe (147797504 bytes)
+
+
+[03:36:46] mods directory: Z:\home\container\PalServer\Pal\Binaries\Wi
+n64\Mods
+[03:36:46] log directory: Z:\home\container\PalServer\Pal\Binaries\Win
+64
+[03:36:46] object dumper directory: Z:\home\container\PalServer\Pal\Bi
+naries\Win64
+
+
+0540:fixme:ntdll:NtQuerySystemInformation info_class SYSTEM_PERFORMANCE_INFORMATION
+[03:36:46] PS Scan attempt 1
+[03:36:46] [PS] Reading image
+[03:36:46] [PS] Starting scan
+0540:fixme:nls:get_dummy_preferred_ui_language (0x8 0x409 00007FFFFEC7C694 0000000000000000 00007FFFFEC7C690) returning a dummy value (current locale)
+0540:fixme:nls:get_dummy_preferred_ui_language (0x8 0x409 00007FFFFEC7C694 00007F24017E2B20 00007FFFFEC7C690) returning a dummy value (current locale)
+0540:fixme:advapi:RegisterEventSourceW ((null),L"Pal-PID1340"): stub
+[03:36:46] [PS] Scan finished in 427.905ms
+[03:36:46] [PS] Found EngineVersion: 5.1
+[03:36:46] [PS] Found GUObjectArray: 0x1488e9ad0
+[03:36:46] [PS] Found GMalloc: 0x1488046a8
+[03:36:46] [PS] Found FName::ToString: 0x142d89960
+[03:36:46] [PS] Found FName::FName(wchar_t*): 0x142d760c0
+[03:36:46] [PS] Found StaticConstructObject_Internal: 0x142f4d750
+[03:36:46] [PS] Found FText::FText(FString&&): 0x142c68f40
+[03:36:46] PS scan successful
+[03:36:46] Need to construct: /Script/CoreUObject.Class
+[03:36:46] Need to construct: /Script/CoreUObject
+[03:36:46] Need to construct: /Script/CoreUObject.Struct
+[03:36:46] Need to construct: /Script/Engine.Pawn
+[03:36:46] Need to construct: /Script/Engine.Character
+[03:36:46] Need to construct: /Script/Engine.Actor
+[03:36:46] Need to construct: /Script/CoreUObject.Vector
+[03:36:46] Need to construct: /Script/Engine.Default__DefaultPawn
+[03:36:46] Need to construct: /Script/Engine.HitResult
+[03:36:46] Need to construct: /Script/Engine.Default__MaterialExpressi
+on
+[03:36:46] Need to construct: /Script/Engine.ActorComponent
+[03:36:46] Need to construct: /Script/CoreUObject.OrientedBox
+[03:36:46] Need to construct: /Script/Engine.MovementComponent
+[03:36:46] Need to construct: /Script/Engine.HUD
+[03:36:46] Need to construct: /Script/Engine.PlayerController
+[03:36:46] Need to construct: /Script/Engine.PlayerCameraManager
+[03:36:46] Need to construct: /Script/CoreUObject.EInterpCurveMode
+[03:36:46] Need to construct: /Script/Engine.ENetRole
+[03:36:46] Need to construct: /Script/MovieScene.MovieSceneEditorData
+[03:36:46] Need to construct: /Script/UMG.Widget
+[03:36:46] Need to construct: /Script/UMG.ComboBoxString
+[03:36:46] Need to construct: /Script/CoreUObject.Interface
+[03:36:46] Need to construct: /Script/CoreUObject.DynamicClass
+0540:fixme:gameux:GameExplorerImpl_VerifyAccess (00007F24161A0320, L"Z:\\home\\container\\PalServer\\Pal\\Binaries\\Win64\\PalServer-Win64-Test-Cmd.exe", 00007FFFFEC7C380)
+[03:36:46] Constructed [1 / 23]: /Script/CoreUObject.Class
+[03:36:46] Constructed [2 / 23]: /Script/CoreUObject
+[03:36:46] Constructed [3 / 23]: /Script/CoreUObject.Struct
+[03:36:46] Constructed [4 / 23]: /Script/Engine.Pawn
+[03:36:46] Constructed [5 / 23]: /Script/Engine.Character
+[03:36:46] Constructed [6 / 23]: /Script/Engine.Actor
+[03:36:46] Constructed [7 / 23]: /Script/CoreUObject.Vector
+[03:36:46] Constructed [8 / 23]: /Script/Engine.HitResult
+[03:36:46] Constructed [9 / 23]: /Script/Engine.ActorComponent
+[03:36:46] Constructed [10 / 23]: /Script/CoreUObject.OrientedBox
+[03:36:46] Constructed [11 / 23]: /Script/Engine.MovementComponent
+[03:36:46] Constructed [12 / 23]: /Script/Engine.HUD
+[03:36:46] Constructed [13 / 23]: /Script/Engine.PlayerController
+[03:36:46] Constructed [14 / 23]: /Script/Engine.PlayerCameraManager
+[03:36:46] Constructed [15 / 23]: /Script/CoreUObject.EInterpCurveMode
+[03:36:46] Constructed [16 / 23]: /Script/Engine.ENetRole
+[03:36:46] Constructed [17 / 23]: /Script/MovieScene.MovieSceneEditorD
+ata
+[03:36:46] Constructed [18 / 23]: /Script/UMG.Widget
+[03:36:46] Constructed [19 / 23]: /Script/UMG.ComboBoxString
+[03:36:46] Constructed [20 / 23]: /Script/CoreUObject.Interface
+[03:36:46] Constructed [21 / 23]: /Script/CoreUObject.DynamicClass
+[03:36:47] Constructed [22 / 23]: /Script/Engine.Default__DefaultPawn
+[03:36:47] Constructed [23 / 23]: /Script/Engine.Default__MaterialExpr
+ession
+[03:36:47] Constructed 23 of 23 objects
+[03:36:47] ProcessInternal address: 0x142f29090 <- Built-in
+[03:36:47] ProcessLocalScriptFunction address: 0x142f29140 <- Built-in
+[03:36:47] Tried to hook CallFunctionByNameWithArguments but function
+ is unavailable.
+[03:36:47] UnrealConfig.FExecVTableOffsetInLocalPlayer: 28
+[03:36:47] Unreal Engine modules (non-modular):
+[03:36:47] MainExe @ 0x140000000 size=0x9270000
+[03:36:47]
+##### MEMBER OFFSETS START #####
+
+[03:36:47] UObjectBase::ClassPrivate = 0x10
+[03:36:47] UObjectBase::bFindCameraComponentWhenViewTarget = 0x5A
+[03:36:47] UObjectBase::InternalIndex = 0xC
+[03:36:47] UObjectBase::EngineShowFlags = 0xB8
+[03:36:47] UObjectBase::AutoReceiveInput = 0x153
+[03:36:47] UObjectBase::World = 0x78
+[03:36:47] UObjectBase::ObjectFlags = 0x8
+[03:36:47] UObjectBase::OnEndCursorOver = 0x1D6
+[03:36:47] UObjectBase::CustomTimeDilation = 0x64
+[03:36:47] UObjectBase::NamePrivate = 0x18
+[03:36:47] UObjectBase::bAllowTickBeforeBeginPlay = 0x5A
+[03:36:47] UObjectBase::bForceNetAddressable = 0x59
+[03:36:47] UObjectBase::InputPriority = 0x154
+[03:36:47] UObjectBase::OuterPrivate = 0x20
+[03:36:47] UObjectBase::bNetTemporary = 0x58
+[03:36:47] UObjectBase::ActorHasBegunPlay = 0x5D
+[03:36:47] UObjectBase::OnInputTouchEnd = 0x1DA
+[03:36:47] UObjectBase::bHasDeferredComponentRegistration = 0x5C
+[03:36:47] UObjectBase::AttachmentReplication = 0x70
+[03:36:47] UObjectBase::Children = 0x188
+[03:36:47] UObjectBase::DetachFence = 0x280
+[03:36:47] UObjectBase::CreationTime = 0x158
+[03:36:47] UObjectBase::DefaultUpdateOverlapsMethodDuringLevelStreamin
+g = 0x5F
+[03:36:47] UObjectBase::InitialLifeSpan = 0x60
+[03:36:47] UObjectBase::Tags = 0x1C0
+[03:36:47] UObjectBase::InputComponent = 0x160
+[03:36:47] UObjectBase::OnTakePointDamage = 0x1D1
+[03:36:47] UObjectBase::LastRenderTime = 0x17C
+[03:36:47] UObjectBase::RemoteRole = 0x68
+[03:36:47] UObjectBase::Layers = 0x1A8
+[03:36:47] UObjectBase::MinNetUpdateFrequency = 0x174
+[03:36:47] UObjectBase::TimerHandle_LifeSpanExpired = 0x1A0
+[03:36:47] UObjectBase::OnTakeAnyDamage = 0x1D0
+[03:36:47] UObjectBase::NetCullDistanceSquared = 0x168
+[03:36:47] UObjectBase::OnActorEndOverlap = 0x1D4
+[03:36:47] UObjectBase::NetDormancy = 0x151
+[03:36:47] UObjectBase::NetDriverName = 0x148
+[03:36:47] UObjectBase::NetTag = 0x16C
+[03:36:47] UObjectBase::NetPriority = 0x178
+[03:36:47] UObjectBase::PrimaryActorTick = 0x28
+[03:36:47] UObjectBase::NetUpdateFrequency = 0x170
+[03:36:47] UObjectBase::OnClicked = 0x1D7
+[03:36:47] UObjectBase::OnActorBeginOverlap = 0x1D3
+[03:36:47] UObjectBase::OnActorHit = 0x1DD
+[03:36:47] UObjectBase::StatHitchesData = 0x390
+[03:36:47] UObjectBase::OnBeginCursorOver = 0x1D5
+[03:36:47] UObjectBase::OnDestroyed = 0x1DE
+[03:36:47] UObjectBase::OnInputTouchEnter = 0x1DB
+[03:36:47] UObjectBase::bHasAudioFocus = 0xFC
+[03:36:47] UObjectBase::OnEndPlay = 0x1DF
+[03:36:47] UObjectBase::OnInputTouchBegin = 0x1D9
+[03:36:47] UObjectBase::OnInputTouchLeave = 0x1DC
+[03:36:47] UObjectBase::OnReleased = 0x1D8
+[03:36:47] UObjectBase::OnTakeRadialDamage = 0x1D2
+[03:36:47] UObjectBase::Owner = 0x140
+[03:36:47] UObjectBase::ParentComponent = 0x1B8
+[03:36:47] UObjectBase::RayTracingGroupId = 0x6C
+[03:36:47] UObjectBase::ReplicatedComponentsInfo = 0x1F0
+[03:36:47] UObjectBase::ReplicatedMovement = 0xD0
+[03:36:47] UObjectBase::UpdateOverlapsMethodDuringLevelStreaming = 0x5
+E
+[03:36:47] UObjectBase::ReplicatedSubObjects = 0x1E0
+[03:36:47] UObjectBase::Role = 0x150
+[03:36:47] UObjectBase::RootComponent = 0x198
+[03:36:47] UObjectBase::SpawnCollisionHandlingMethod = 0x152
+[03:36:47] UObjectBase::bNetStartup = 0x58
+[03:36:47] UObjectBase::bActorIsBeingConstructed = 0x5D
+[03:36:47] UObjectBase::bActorBeginningPlayFromLevelStreaming = 0x5C
+[03:36:47] UObjectBase::bAllowReceiveTickEventOnDedicatedServer = 0x5B
+[03:36:47] UObjectBase::bIsMouseOverClient = 0x39D
+[03:36:47] UObjectBase::bActorEnableCollision = 0x5C
+[03:36:47] UObjectBase::bActorInitialized = 0x5C
+[03:36:47] UObjectBase::bActorIsBeingDestroyed = 0x5D
+[03:36:47] UObjectBase::bActorSeamlessTraveled = 0x5B
+[03:36:47] UObjectBase::bActorWantsDestroyDuringBeginPlay = 0x5D
+[03:36:47] UObjectBase::bAlwaysRelevant = 0x58
+[03:36:47] UObjectBase::bAsyncPhysicsTickEnabled = 0x5D
+[03:36:47] UObjectBase::bAutoDestroyWhenFinished = 0x5A
+[03:36:47] UObjectBase::bBlockInput = 0x5A
+[03:36:47] UObjectBase::bCallPreReplication = 0x58
+[03:36:47] UObjectBase::bCallPreReplicationForReplay = 0x58
+[03:36:47] UObjectBase::bCanBeDamaged = 0x5A
+[03:36:47] UObjectBase::bCanBeInCluster = 0x5B
+[03:36:47] UObjectBase::bCollideWhenPlacing = 0x5A
+[03:36:47] UObjectBase::bHasRegisteredAllComponents = 0x5C
+[03:36:47] UObjectBase::bEnableAutoLODGeneration = 0x5B
+[03:36:47] UObjectBase::bExchangedRoles = 0x59
+[03:36:47] UObjectBase::bGenerateOverlapEventsDuringLevelStreaming = 0
+x5A
+[03:36:47] UObjectBase::bHasFinishedSpawning = 0x5C
+[03:36:47] UObjectBase::bHidden = 0x58
+[03:36:47] UObjectBase::bIgnoresOriginShifting = 0x5A
+[03:36:47] UObjectBase::bIsEditorOnlyActor = 0x5B
+[03:36:47] UObjectBase::bNetCheckedInitialPhysicsState = 0x5B
+[03:36:47] UObjectBase::bNetLoadOnClient = 0x59
+[03:36:47] UObjectBase::bNetUseOwnerRelevancy = 0x59
+[03:36:47] UObjectBase::bOnlyRelevantToOwner = 0x58
+[03:36:47] UObjectBase::bRelevantForLevelBounds = 0x59
+[03:36:47] UObjectBase::bRelevantForNetworkReplays = 0x59
+[03:36:47] UObjectBase::bReplayRewindable = 0x59
+[03:36:47] UObjectBase::bReplicateMovement = 0x58
+[03:36:47] UObjectBase::bReplicateUsingRegisteredSubObjectList = 0x5B
+[03:36:47] UObjectBase::bReplicates = 0x5B
+[03:36:47] UObjectBase::bRunningUserConstructionScript = 0x5C
+[03:36:47] UObjectBase::bTearOff = 0x59
+[03:36:47] UObjectBase::bTickFunctionsRegistered = 0x5C
+[03:36:47] UObjectBase::ActiveSplitscreenType = 0x70
+[03:36:47] UObjectBase::AudioDeviceHandle = 0xF8
+[03:36:47] UObjectBase::CurrentBufferVisualizationMode = 0x130
+[03:36:47] UObjectBase::CurrentLumenVisualizationMode = 0x140
+[03:36:47] UObjectBase::CurrentNaniteVisualizationMode = 0x138
+[03:36:47] UObjectBase::CurrentVirtualShadowMapVisualizationMode = 0x1
+48
+[03:36:47] UObjectBase::CursorWidgets = 0x200
+[03:36:47] UObjectBase::DebugProperties = 0x48
+[03:36:47] UObjectBase::GameLayerManagerPtr = 0x120
+[03:36:47] UObjectBase::HardwareCursorCache = 0x160
+[03:36:47] UObjectBase::HardwareCursors = 0x1B0
+[03:36:47] UObjectBase::HighResScreenshotDialog = 0x150
+[03:36:47] UObjectBase::MaxSplitscreenPlayers = 0x68
+[03:36:47] UObjectBase::MouseCaptureMode = 0x39A
+[03:36:47] UObjectBase::MouseLockMode = 0x39C
+[03:36:47] UObjectBase::SplitscreenInfo = 0x58
+[03:36:47] UObjectBase::StatUnitData = 0x388
+[03:36:47] UObjectBase::ViewModeIndex = 0xB0
+[03:36:47] UObjectBase::Viewport = 0xE8
+[03:36:47] UObjectBase::ViewportConsole = 0x40
+[03:36:47] UObjectBase::ViewportFrame = 0xF0
+[03:36:47] UObjectBase::ViewportOverlayWidget = 0x110
+[03:36:47] UObjectBase::Window = 0x100
+[03:36:47] UObjectBase::bDisableSplitScreenOverride = 0x398
+[03:36:47] UObjectBase::bDisableWorldRendering = 0x6C
+[03:36:47] UObjectBase::bHideCursorDuringCapture = 0x39B
+[03:36:47] UObjectBase::bIgnoreInput = 0x399
+[03:36:47] UObjectBase::bIsPlayInEditorViewport = 0x6C
+[03:36:47] UObjectBase::bShowTitleSafeZone = 0x6C
+[03:36:47] UObjectBase::bSuppressTransitionMessage = 0x88
+[03:36:47] UObjectBase::bUseSoftwareCursorWidgets = 0x250
+[03:36:47] UScriptStruct::StructFlags = 0xB0
+[03:36:47] UScriptStruct::CppStructOps = 0xB8
+[03:36:47] UScriptStruct::bPrepareCppStructOpsCompleted = 0xB4
+[03:36:47] UScriptStruct::ICppStructOps::Alignment = 0xC
+[03:36:47] UScriptStruct::ICppStructOps::Size = 0x8
+[03:36:47] FField::ClassPrivate = 0x8
+[03:36:47] FField::NamePrivate = 0x28
+[03:36:47] FField::FlagsPrivate = 0x30
+[03:36:47] FField::Next = 0x20
+[03:36:47] FField::Owner = 0x10
+[03:36:47] FOutputDevice::bAutoEmitLineTerminator = 0x9
+[03:36:47] FOutputDevice::bSuppressEventTag = 0x8
+[03:36:47] FEnumProperty::Enum = 0x80
+[03:36:47] FEnumProperty::UnderlyingProp = 0x78
+[03:36:47] UStruct::DestructorLink = 0x80
+[03:36:47] UStruct::Children = 0x48
+[03:36:47] UStruct::ChildProperties = 0x50
+[03:36:47] UStruct::PostConstructLink = 0x88
+[03:36:47] UStruct::UnresolvedScriptProperties = 0xA0
+[03:36:47] UStruct::MinAlignment = 0x5C
+[03:36:47] UStruct::PropertiesSize = 0x58
+[03:36:47] UStruct::PropertyLink = 0x70
+[03:36:47] UStruct::RefLink = 0x78
+[03:36:47] UStruct::Script = 0x60
+[03:36:47] UStruct::ScriptAndPropertyObjectReferences = 0x90
+[03:36:47] UStruct::SuperStruct = 0x40
+[03:36:47] UFunction::EventGraphCallOffset = 0xD0
+[03:36:47] UFunction::EventGraphFunction = 0xC8
+[03:36:47] UFunction::RPCId = 0xBA
+[03:36:47] UFunction::FirstPropertyToInit = 0xC0
+[03:36:47] UFunction::Func = 0xD8
+[03:36:47] UFunction::FunctionFlags = 0xB0
+[03:36:47] UFunction::NumParms = 0xB4
+[03:36:47] UFunction::ParmsSize = 0xB6
+[03:36:47] UFunction::RPCResponseId = 0xBC
+[03:36:47] UFunction::ReturnValueOffset = 0xB8
+[03:36:47] UField::Next = 0x28
+[03:36:47] FProperty::ArrayDim = 0x38
+[03:36:47] FProperty::DestructorLinkNext = 0x68
+[03:36:47] FProperty::ElementSize = 0x3C
+[03:36:47] FProperty::NextRef = 0x60
+[03:36:47] FProperty::Offset_Internal = 0x4C
+[03:36:47] FProperty::PostConstructLinkNext = 0x70
+[03:36:47] FProperty::PropertyLinkNext = 0x58
+[03:36:47] FProperty::PropertyFlags = 0x40
+[03:36:47] FProperty::RepIndex = 0x48
+[03:36:47] FProperty::RepNotifyFunc = 0x50
+[03:36:47] UWorld::BlockTillLevelStreamingCompletedEpoch = 0x144
+[03:36:47] UWorld::bAllowAudioPlayback = 0x13E
+[03:36:47] UWorld::ActiveLevelCollectionIndex = 0x190
+[03:36:47] UWorld::AudioTimeSeconds = 0x678
+[03:36:47] UWorld::CommittedPersistentLevelName = 0x700
+[03:36:47] UWorld::bInTick = 0x13B
+[03:36:47] UWorld::LWILastAssignedUID = 0x258
+[03:36:47] UWorld::CleanupWorldTag = 0x70C
+[03:36:47] UWorld::bTickNewlySpawned = 0x13B
+[03:36:47] UWorld::AuthorityGameMode = 0x150
+[03:36:47] UWorld::DeltaRealTimeSeconds = 0x680
+[03:36:47] UWorld::BuildStreamingDataTimer = 0x448
+[03:36:47] UWorld::bPlayersOnly = 0x13D
+[03:36:47] UWorld::DeltaTimeSeconds = 0x684
+[03:36:47] UWorld::ExtraReferencedObjects = 0x68
+[03:36:47] UWorld::PreparingLevelNames = 0x6F0
+[03:36:47] UWorld::IsInBlockTillLevelStreamingCompleted = 0x140
+[03:36:47] UWorld::bIsRunningConstructionScript = 0x13C
+[03:36:47] UWorld::bAllowDeferredPhysicsStateCreation = 0x108
+[03:36:47] UWorld::LastRenderTime = 0x130
+[03:36:47] UWorld::LastTimeUnbuiltLightingWasEncountered = 0x658
+[03:36:47] UWorld::bHasEverBeenInitialized = 0x13F
+[03:36:47] UWorld::NextSwitchCountdown = 0x6C0
+[03:36:47] UWorld::bMaterialParameterCollectionInstanceNeedsDeferredUp
+date = 0x13F
+[03:36:47] UWorld::RealTimeSeconds = 0x670
+[03:36:47] UWorld::NextURL = 0x6E0
+[03:36:47] UWorld::NumStreamingLevelsBeingLoaded = 0x6DA
+[03:36:47] UWorld::PauseDelay = 0x688
+[03:36:47] UWorld::PerModuleDataObjects = 0x78
+[03:36:47] UWorld::bIsDefaultLevel = 0x13C
+[03:36:47] UWorld::PlayerNum = 0x618
+[03:36:47] UWorld::bAggressiveLOD = 0x13C
+[03:36:47] UWorld::StreamingLevelsPrefix = 0xC8
+[03:36:47] UWorld::bTriggerPostLoadMap = 0x13B
+[03:36:47] UWorld::bIsLevelStreamingFrozen = 0x13B
+[03:36:47] UWorld::StreamingVolumeUpdateDelay = 0x61C
+[03:36:47] UWorld::bIsBuilt = 0x13B
+[03:36:47] UWorld::TimeSeconds = 0x660
+[03:36:47] UWorld::UnpausedTimeSeconds = 0x668
+[03:36:47] UWorld::bActorsInitialized = 0x13C
+[03:36:47] UWorld::bIsTearingDown = 0x13D
+[03:36:47] UWorld::bAreConstraintsDirty = 0x13E
+[03:36:47] UWorld::bBegunPlay = 0x13D
+[03:36:47] UWorld::bDebugPauseExecution = 0x13D
+[03:36:47] UWorld::bDoDelayedUpdateCullDistanceVolumes = 0x13C
+[03:36:47] UWorld::bRequestedBlockOnAsyncLoading = 0x13C
+[03:36:47] UWorld::bDropDetail = 0x13C
+[03:36:47] UWorld::bMatchStarted = 0x13D
+[03:36:47] UWorld::bIsCameraMoveableWhenPaused = 0x13E
+[03:36:47] UWorld::bShouldSimulatePhysics = 0x13C
+[03:36:47] UWorld::bIsWorldInitialized = 0x13B
+[03:36:47] UWorld::bKismetScriptError = 0x13D
+[03:36:47] UWorld::bMarkedObjectsPendingKill = 0x708
+[03:36:47] UWorld::bWorldWasLoadedThisTick = 0x13B
+[03:36:47] UWorld::bPlayersOnlyPending = 0x13D
+[03:36:47] UWorld::bPostTickComponentUpdate = 0x13B
+[03:36:47] UWorld::bRequiresHitProxies = 0x13E
+[03:36:47] UWorld::bShouldForceUnloadStreamingLevels = 0x13E
+[03:36:47] UWorld::bShouldForceVisibleStreamingLevels = 0x13E
+[03:36:47] UWorld::bShouldTick = 0x13E
+[03:36:47] UWorld::bStartup = 0x13D
+[03:36:47] UWorld::bStreamingDataDirty = 0x13E
+[03:36:47] UClass::bLayoutChanging = 0xD1
+[03:36:47] UClass::ClassWithin = 0xE0
+[03:36:47] UClass::bCooked = 0xD0
+[03:36:47] UClass::ClassConfigName = 0xE8
+[03:36:47] UClass::ClassConstructor = 0xB0
+[03:36:47] UClass::ClassDefaultObject = 0x110
+[03:36:47] UClass::ClassFlags = 0xD4
+[03:36:47] UClass::ClassUnique = 0xC8
+[03:36:47] UClass::ClassVTableHelperCtorCaller = 0xB8
+[03:36:47] UClass::FirstOwnedClassRep = 0xCC
+[03:36:47] UClass::FuncMap = 0x128
+[03:36:47] UClass::Interfaces = 0x1D0
+[03:36:47] UClass::NetFields = 0x100
+[03:36:47] UClass::SparseClassData = 0x118
+[03:36:47] UClass::SparseClassDataStruct = 0x120
+[03:36:47] UClass::SuperFuncMap = 0x178
+[03:36:47] UEnum::CppForm = 0x50
+[03:36:47] UEnum::CppType = 0x30
+[03:36:47] UEnum::EnumDisplayNameFn = 0x58
+[03:36:47] UEnum::Names = 0x40
+[03:36:47] UEnum::EnumFlags_Internal = 0x54
+[03:36:47] UEnum::EnumPackage = 0x60
+[03:36:47] FObjectPropertyBase::PropertyClass = 0x78
+[03:36:47] FDelegateProperty::SignatureFunction = 0x78
+[03:36:47] FMulticastDelegateProperty::SignatureFunction = 0x78
+[03:36:47] FSetProperty::ElementProp = 0x78
+[03:36:47] FStructProperty::Struct = 0x78
+[03:36:47] FArrayProperty::Inner = 0x78
+[03:36:47] FArrayProperty::ArrayFlags = 0x80
+[03:36:47] FMapProperty::KeyProp = 0x78
+[03:36:47] FMapProperty::MapFlags = 0xA0
+[03:36:47] FMapProperty::ValueProp = 0x80
+[03:36:47] FBoolProperty::FieldMask = 0x7B
+[03:36:47] FBoolProperty::ByteMask = 0x7A
+[03:36:47] FBoolProperty::FieldSize = 0x78
+[03:36:47] FBoolProperty::ByteOffset = 0x79
+[03:36:47] FByteProperty::Enum = 0x78
+[03:36:47] FClassProperty::MetaClass = 0x80
+[03:36:47] FSoftClassProperty::MetaClass = 0x80
+[03:36:47] FInterfaceProperty::InterfaceClass = 0x78
+[03:36:47] FFieldPathProperty::PropertyClass = 0x78
+[03:36:47]
+##### MEMBER OFFSETS END #####
+
+[03:36:47] m_shared_functions: 0x6ffff81602a0
+[03:36:47] Enabling custom events
+[03:36:47] Starting mods (from mods.txt load order)...
+[03:36:47] Mod 'ActorDumperMod' disabled in mods.txt.
+[03:36:47] Starting Lua mod 'ConsoleCommandsMod'
+[03:36:47] Starting Lua mod 'ConsoleEnablerMod'
+[03:36:47] [Lua] ConsoleClass, GameViewport, or ViewportConsole is inv
+alid
+[03:36:47] Mod 'SplitScreenMod' disabled in mods.txt.
+[03:36:47] Mod 'LineTraceMod' disabled in mods.txt.
+[03:36:47] Starting Lua mod 'BPModLoaderMod'
+[03:36:47] [Lua] Mods/BPModLoaderMod/load_order.txt not present or no
+matching mods, loading all BP mods in random order.[03:36:47] Starting
+ Lua mod 'BPML_GenericFunctions'
+[03:36:47] Mod 'jsbLuaProfilerMod' disabled in mods.txt.
+[03:36:47] Starting Lua mod 'Keybinds'
+[03:36:47] Starting mods (from enabled.txt, no defined load order)...
+[03:36:47] Event loop start
+container@pterodactyl~ Server marked as running...
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+054c:fixme:dbghelp:elf_search_auxv can't find symbol in module
+Exited with exit code: 3
 container@pterodactyl~ Server marked as offline...
 [Pterodactyl Daemon]: ---------- Detected server process in a crashed state! ----------
-[Pterodactyl Daemon]: Exit code: 0
+[Pterodactyl Daemon]: Exit code: 3
 [Pterodactyl Daemon]: Out of memory: false
+[Pterodactyl Daemon]: Aborting automatic restart, last crash occurred less than 60 seconds ago.
