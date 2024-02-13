@@ -1,0 +1,233 @@
+container@pterodactyl~ Server marked as offline...
+[Pterodactyl Daemon]: Checking server disk space usage, this could take a few seconds...
+[Pterodactyl Daemon]: Updating process configuration files...
+[Pterodactyl Daemon]: Ensuring file permissions are set correctly, this could take a few seconds...
+container@pterodactyl~ Server marked as starting...
+[Pterodactyl Daemon]: Pulling Docker container image, this could take a few minutes to complete...
+Pulling from thakyz/steamcmd 
+Digest: sha256:636ae264feccee716c7ebe23bf5ac70d3104779602a715c762851fdd453e79ee 
+Status: Image is up to date for ghcr.io/thakyz/steamcmd:wine 
+[Pterodactyl Daemon]: Finished pulling Docker container image
+Running on Debian 12.5
+Current timezone: Etc/UTC
+wine-9.0
+steam user is not set.
+Using anonymous user.
+tid(22) burning pthread_key_t == 0 so we never use it
+WARNING: setlocale('en_US.UTF-8') failed, using locale: 'C'. International characters may not work.
+Redirecting stderr to '/home/container/Steam/logs/stderr.txt'
+Logging directory: '/home/container/Steam/logs'
+[  0%] Checking for available updates...
+[----] Verifying installation...
+Steam Console Client (c) Valve Corporation - version 1705108307
+-- type 'quit' to exit --
+Loading Steam API...dlmopen steamservice.so failed: steamservice.so: cannot open shared object file: No such file or directory
+OK
+Connecting anonymously to Steam Public...OK
+Waiting for client config...OK
+Waiting for user info...OK
+"@sSteamCmdForcePlatformType" = "windows"
+Success! App '2394010' already up to date.
+First launch will throw some errors. Ignore them
+Installing Gecko
+_XSERVTransmkdir: ERROR: euid != 0,directory /tmp/.X11-unix will not be created.
+0084:fixme:hid:handle_IRP_MN_QUERY_ID Unhandled type 00000005
+0084:fixme:hid:handle_IRP_MN_QUERY_ID Unhandled type 00000005
+0084:fixme:hid:handle_IRP_MN_QUERY_ID Unhandled type 00000005
+0084:fixme:hid:handle_IRP_MN_QUERY_ID Unhandled type 00000005
+------------------------------------------------------
+warning: You don't have the proper permissions to run this command. Try again with sudo or as root.
+------------------------------------------------------
+Installing atmlib
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+Using winetricks 20240105-next - sha256sum: 30de40300f3b76333eff7049896d6fb4d55085664474a664a29baa7aa14ce432 with wine-9.0 and WINEARCH=win64
+Executing w_do_call atmlib
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+atmlib already installed, skipping
+Installing corefonts
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+Using winetricks 20240105-next - sha256sum: 30de40300f3b76333eff7049896d6fb4d55085664474a664a29baa7aa14ce432 with wine-9.0 and WINEARCH=win64
+Executing w_do_call corefonts
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+corefonts already installed, skipping
+Installing gdiplus
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+Using winetricks 20240105-next - sha256sum: 30de40300f3b76333eff7049896d6fb4d55085664474a664a29baa7aa14ce432 with wine-9.0 and WINEARCH=win64
+Executing w_do_call gdiplus
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+gdiplus already installed, skipping
+Installing msxml3
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+Using winetricks 20240105-next - sha256sum: 30de40300f3b76333eff7049896d6fb4d55085664474a664a29baa7aa14ce432 with wine-9.0 and WINEARCH=win64
+Executing w_do_call msxml3
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+msxml3 already installed, skipping
+Installing msxml6
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+Using winetricks 20240105-next - sha256sum: 30de40300f3b76333eff7049896d6fb4d55085664474a664a29baa7aa14ce432 with wine-9.0 and WINEARCH=win64
+Executing w_do_call msxml6
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+msxml6 already installed, skipping
+Installing vcrun2008
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+Using winetricks 20240105-next - sha256sum: 30de40300f3b76333eff7049896d6fb4d55085664474a664a29baa7aa14ce432 with wine-9.0 and WINEARCH=win64
+Executing w_do_call vcrun2008
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+vcrun2008 already installed, skipping
+Installing vcrun2010
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+Using winetricks 20240105-next - sha256sum: 30de40300f3b76333eff7049896d6fb4d55085664474a664a29baa7aa14ce432 with wine-9.0 and WINEARCH=win64
+Executing w_do_call vcrun2010
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+vcrun2010 already installed, skipping
+Installing vcrun2012
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+Using winetricks 20240105-next - sha256sum: 30de40300f3b76333eff7049896d6fb4d55085664474a664a29baa7aa14ce432 with wine-9.0 and WINEARCH=win64
+Executing w_do_call vcrun2012
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+vcrun2012 already installed, skipping
+Installing fontsmooth-rgb
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+Using winetricks 20240105-next - sha256sum: 30de40300f3b76333eff7049896d6fb4d55085664474a664a29baa7aa14ce432 with wine-9.0 and WINEARCH=win64
+------------------------------------------------------
+warning: Calling fontsmooth-rgb is deprecated, please use fontsmooth=rgb instead
+------------------------------------------------------
+Executing w_do_call fontsmooth=rgb
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+Executing load_fontsmooth rgb
+Setting font smoothing to rgb
+Executing wine C:\windows\syswow64\regedit.exe /S C:\windows\Temp\fontsmooth.reg
+Executing wine64 C:\windows\regedit.exe /S C:\windows\Temp\fontsmooth.reg
+Installing vcrun2022
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+Using winetricks 20240105-next - sha256sum: 30de40300f3b76333eff7049896d6fb4d55085664474a664a29baa7aa14ce432 with wine-9.0 and WINEARCH=win64
+Executing w_do_call vcrun2022
+------------------------------------------------------
+warning: You are using a 64-bit WINEPREFIX. Note that many verbs only install 32-bit versions of packages. If you encounter problems, please retest in a clean 32-bit WINEPREFIX before reporting a bug.
+------------------------------------------------------
+vcrun2022 already installed, skipping
+:/home/container$ (while read cmd; do rcon -s -a "localhost:$RCON_PORT" -p "$ADMIN_PASSWORD" "$cmd";done) < /dev/stdin & /home/container/RunPalServer.sh
+WINEDLLOVERRIDES="mscoree,mshtml="
+054c:fixme:ntdll:NtQuerySystemInformation info_class SYSTEM_PERFORMANCE_INFORMATION
+054c:fixme:nls:get_dummy_preferred_ui_language (0x8 0x409 00007FFFFEC7C694 0000000000000000 00007FFFFEC7C690) returning a dummy value (current locale)
+054c:fixme:nls:get_dummy_preferred_ui_language (0x8 0x409 00007FFFFEC7C694 00007FBB5CC12B20 00007FFFFEC7C690) returning a dummy value (current locale)
+054c:fixme:advapi:RegisterEventSourceW ((null),L"Pal-PID1372"): stub
+054c:fixme:gameux:GameExplorerImpl_VerifyAccess (00007FBB715A7630, L"Z:\\home\\container\\PalServer\\Pal\\Binaries\\Win64\\PalServer-Win64-Test-Cmd.exe", 00007FFFFEC7C380)
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0558:fixme:dbghelp:elf_search_auxv can't find symbol in module
+Exited with exit code: 
+container@pterodactyl~ Server marked as offline...
+[Pterodactyl Daemon]: ---------- Detected server process in a crashed state! ----------
+[Pterodactyl Daemon]: Exit code: 0
+[Pterodactyl Daemon]: Out of memory: false
