@@ -2,7 +2,10 @@
 # steamcmd Base Installation Script
 #
 # Server Files: /mnt/server
-# Image to install with is 'debian:bookworm-slim'
+# Image to install with is 'ghcr.io/parkervcp/installers:debian'
+
+# NOTES:
+# Big thanks to Natalie on the PalWorld Modding Discord for already creating a working wine setup.
 
 ATTRIBUTE_RESET="\e[0m"
 COLOR_DEFAULT="\e[39m"
@@ -72,9 +75,7 @@ main_function() {
 
   apt -y update
   dpkg --add-architecture i386
-  apt -y --no-install-recommends install curl lib32gcc-s1 ca-certificates gnupg wget software-properties-common unzip \
-                                         gnupg2 ca-certificates curl git unzip zip tar jq wget python3 python3-yaml \
-                                         python3-requests python3-urllib3 lsof net-tools
+  apt -y --no-install-recommends install curl lib32gcc-s1 ca-certificates gnupg wget software-properties-common unzip gnupg2 ca-certificates curl git unzip zip tar jq wget python3 python3-yaml python3-requests python3-urllib3 lsof net-tools
 
   ## just in case someone removed the defaults.
   if [[ "${STEAM_USER}" == "" ]] || [[ "${STEAM_PASS}" == "" ]]; then
@@ -90,9 +91,7 @@ main_function() {
   # Setup github downloader.
   cd "/mnt/server" || exit_and_message 1 "Failed to go to directory \`/mnt/server'"
   if [[ ! -f "/mnt/server/download_latest.py" ]]; then
-    curl -sSL -o "/mnt/server/download_latest.py" \
-      "https://raw.githubusercontent.com/thakyZ/pterodactyl_eggs/master/managers/palworld/download_latest.py" \
-      || exit_and_message 1 "Failed to download file \`download_latest.py'"
+    curl -sSL -o "/mnt/server/download_latest.py" -H "Authorization: Bearer ${GITHUB_API_KEY}" "https://raw.githubusercontent.com/thakyZ/pterodactyl_eggs/master/managers/palworld/download_latest.py" || exit_and_message 1 "Failed to download file \`download_latest.py'"
   fi
 
   if [[ ! -f "/mnt/server/.env" ]]; then
@@ -121,8 +120,7 @@ install_pst() {
     mkdir "/mnt/server/PST/.temp" || exit_and_message 1 "Failed to make directory \`/mnt/server/PST/.temp'"
   fi
 
-  python3 "/mnt/server/download_latest.py" -o "/mnt/server/PST/.temp" --repo "gh:zaigie/palworld-server-tool" \
-          --file "r'pst-agent_v[\d\.]+_linux_x86_64'" "r'pst_v[\d\.]+_linux_x86_64.tar.gz'"
+  python3 "/mnt/server/download_latest.py" -o "/mnt/server/PST/.temp" --repo "gh:zaigie/palworld-server-tool" --file "r'pst-agent_v[\d\.]+_linux_x86_64'" "r'pst_v[\d\.]+_linux_x86_64.tar.gz'"
   exit_code=$?
   if [[ "${exit_code}" != "0" ]]; then
     exit_and_message $exit_code "Failed to download files with \`download_latest.py'"
@@ -136,31 +134,27 @@ install_pst() {
   for i in /mnt/server/PST/linux_x86_64/*; do
     mv "${i}" "/mnt/server/PST/" || exit_and_message 1 "Failed move file from \`${i}' to \`/mnt/server/PST/'"
   done
-  rm -r "/mnt/server/PST/linux_x86_64/" \
-    || exit_and_message 1 "Failed remove directory at \`/mnt/server/PST/linux_x86_64/'"
+  rm -r "/mnt/server/PST/linux_x86_64/" || exit_and_message 1 "Failed remove directory at \`/mnt/server/PST/linux_x86_64/'"
 
   for i in /mnt/server/PST/.temp/*; do
     if [[ "${i}" == "*pst-agent*" ]]; then
-      mv "${i}" "/mnt/server/PST/pst-agent" \
-        || exit_and_message 1 "Failed move file from \`${i}' to \`/mnt/server/PST/pst-agent'"
+      mv "${i}" "/mnt/server/PST/pst-agent" || exit_and_message 1 "Failed move file from \`${i}' to \`/mnt/server/PST/pst-agent'"
     fi
   done
 
   if [[ "${exit_code}" == "0" ]]; then
     rm -r "/mnt/server/PST/.temp/" || exit_and_message 1 "Failed remove file at \`/mnt/server/PST/.temp/'"
   fi
-
+p
   if [[ ! -f "/mnt/server/PST/config.yaml" ]]; then
     touch "/mnt/server/PST/config.yaml" || exit_and_message 1 "Failed to create file at \`/mnt/server/PST/config.yaml'"
   fi
 
-  if [[ ! -f "/mnt/server/setup_config.py" ]]; then
-    curl -sSL -o "/mnt/server/setup_config.py" \
-      "https://raw.githubusercontent.com/thakyZ/pterodactyl_eggs/master/managers/palworld/pst/setup_config.py" \
-      || exit_and_message 1 "Failed to download file \`setup_config.py'"
+  if [[ ! -f "/mnt/server/PST/setup_config.py" ]]; then
+    curl -sSL -o "/mnt/server/PST/setup_config.py" -H "Authorization: Bearer ${GITHUB_API_KEY}" "https://raw.githubusercontent.com/thakyZ/pterodactyl_eggs/master/managers/palworld/pst/setup_config.py" || exit_and_message 1 "Failed to download file \`setup_config.py'"
   fi
 
-  command="python3 \"/mnt/server/setup_config.py\" --web_password \"${PASSWORD}\" --web_tls \"${ENABLE_TLS:-false}\""
+  command="python3 \"/mnt/server/PST/setup_config.py\" --web_password \"${PASSWORD}\" --web_tls \"${ENABLE_TLS:-false}\""
   if [[ "${ENABLE_TLS:-false}" == "true" ]]; then
    command="${command} --web_cert_path \"${CERT_PATH}\" --web_key_path \"${KEY_PATH}\""
   fi
@@ -168,15 +162,13 @@ install_pst() {
   command="${command} \"${PST_RCON_TIMEOUT:-5}\" --rcon_sync_interval \"${PST_RCON_SYNC_INTERVAL:-60}\" --rcon_password"
   command="${command} \"${RCON_PASSWORD}\" --save_path \"${PST_SAV_FILE_PATH:-/path/to/you/Level.sav}\" --save_decode_path"
   command="${command} \"${PST_SAV_CLI:-/path/to/your/sav_cli}\" --save_sync_interval \"${PST_SAV_SYNC_INTERVAL:-120}\""
-  command="${command} --io \"/mnt/server/config.yaml\""
+  command="${command} --io \"/mnt/server/PST/config.yaml\""
   eval "${command}" || exit_and_message 1 "Failed to parse config file."
 
-  if [[ ! -f "/mnt/server/run.sh" ]]; then
-    wget -q -O "/mnt/server/run.sh" \
-      "https://raw.githubusercontent.com/thakyZ/pterodactyl_eggs/master/managers/palworld/pst/run.sh" \
-      || exit_and_message 1 "Failed to download file \`run.sh'."
+  if [[ ! -f "/mnt/server/PST/run.sh" ]]; then
+    curl -sSL -o "/mnt/server/PST/run.sh" -H "Authorization: Bearer ${GITHUB_API_KEY}" "https://raw.githubusercontent.com/thakyZ/pterodactyl_eggs/master/managers/palworld/pst/run.sh" || exit_and_message 1 "Failed to download file \`run.sh'."
   fi
-  chmod +x /mnt/server/run.sh || exit_and_message 1 "Failed to set permissions on file \`run.sh'."
+  chmod +x /mnt/server/PST/run.sh || exit_and_message 1 "Failed to set permissions on file \`run.sh'."
 
   ## install end
   echo -e "${COLOR_GREEN}-------------------------------------------------------------${ATTRIBUTE_RESET}"
@@ -192,9 +184,9 @@ install_palserver() {
   ## download and install steamcmd
   cd /tmp || exit_and_message 1 "Failed to change directory to \`/tmp'"
   mkdir -p /mnt/server/steamcmd || exit_and_message 1 "Failed to make directory at \`/mnt/server/steamcmd'"
-  curl -sSL -o steamcmd.tar.gz https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
-    || exit_and_message 1 "Failed to download file \`steamcmd.tar.gz'"
+  curl -sSL -o steamcmd.tar.gz https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz || exit_and_message 1 "Failed to download file \`steamcmd.tar.gz'"
   tar -xzvf steamcmd.tar.gz -C /mnt/server/steamcmd || exit_and_message 1 "Failed to download file \`steamcmd.tar.gz'"
+  mkdir -p /mnt/server/steamapps || exit_and_message 1 "Failed to create directory to \`/mnt/server/steamapps'" # Fix steamcmd disk write error when this folder is missing
   cd /mnt/server/steamcmd || exit_and_message 1 "Failed to change directory to \`/mnt/server/steamcmd'"
 
   # SteamCMD fails otherwise for some reason, even running as root.
@@ -212,40 +204,21 @@ install_palserver() {
   if [[ -z ${SRCDS_BETAPASS} ]]; then
     SRCDS_BETAPASS_OPT="-beta ${SRCDS_BETAPASS}"
   fi
-  eval "./steamcmd.sh +force_install_dir /mnt/server/PalServer +login ${STEAM_USER} ${STEAM_PASS} ${STEAM_AUTH} \
-    ${WINDOWS_INSTALL_OPT} +app_update ${SRCDS_APPID} ${SRCDS_BETAID_OPT} ${SRCDS_BETAPASS_OPT} ${INSTALL_FLAGS} \
-    validate +quit" ## other flags may be needed depending on install. looking at you cs 1.6
+  eval "/mnt/server/steamcmd/steamcmd.sh +force_install_dir ${STEAMCMD_INSTALLDIR:-/mnt/server/PalServer} +login ${STEAM_USER} ${STEAM_PASS} ${STEAM_AUTH} ${WINDOWS_INSTALL_OPT} +app_update ${SRCDS_APPID} ${SRCDS_BETAID_OPT} ${SRCDS_BETAPASS_OPT} ${INSTALL_FLAGS} validate +quit" ## other flags may be needed depending on install. looking at you cs 1.6
   exit_code=$?
   if [[ "${exit_code}" != "0" ]]; then
     exit_and_message $exit_code "Failed to run command \`steamcmd.sh'"
   fi
 
+  ## set up 32 bit libraries
+  mkdir -p /mnt/server/.steam/sdk32
+  cp -v linux32/steamclient.so ../.steam/sdk32/steamclient.so
+
+  ## set up 64 bit libraries
+  mkdir -p /mnt/server/.steam/sdk64
+  cp -v linux64/steamclient.so ../.steam/sdk64/steamclient.so
+
   if [[ "${WINDOWS_INSTALL}" == "1" ]]; then
-    ## fix issues with startup.
-    if [[ ! -d ".wine/drive_c/users/container/AppData/Local" ]]; then
-      mkdir -p "/mnt/server/.wine/drive_c/users/container/AppData/Local" \
-        || exit_and_message 1 "Failed to create directory at \`/mnt/server/.wine/drive_c/users/container/AppData/Local'"
-    fi
-
-    # Setup windows
-    cd /tmp || exit_and_message 1 "Failed to change directory to \`/tmp'"
-    curl -sSL -o "winmm.zip" -H "Authorization: Bearer ${GITHUB_API_KEY}" \
-      "https://raw.githubusercontent.com/thakyZ/pterodactyl_eggs/master/game_eggs/steamcmd_servers/palworld/binaries/winmm.zip" \
-      || exit_and_message 1 "Failed to download file \`winmm.zip'"
-    curl -sSL -o "ue4ss.zip" -H "Authorization: Bearer ${GITHUB_API_KEY}" \
-      "https://github.com/UE4SS-RE/RE-UE4SS/releases/download/v3.0.0/UE4SS_v3.0.0.zip" \
-      || exit_and_message 1 "Failed to download file \`ue4ss.zip'"
-    mkdir server/PalServer/Pal/Binaries/Win64 \
-      || exit_and_message 1 "Failed to make directory at \`/mnt/server/PalServer/Pal/Binaries/Win64'"
-    unzip winmm.zip -d /mnt/server/PalServer/Pal/Binaries/Win64 \
-      || exit_and_message 1 "Failed to unzip file \`winmm.zip'"
-    rm winmm.zip \
-      || exit_and_message 1 "Failed to remove file \`winmm.zip'"
-    unzip ue4ss.zip -d /mnt/server/PalServer/Pal/Binaries/Win64 \
-      || exit_and_message 1 "Failed to unzip file \`ue4ss.zip'"
-    rm ue4ss.zip \
-      || exit_and_message 1 "Failed to remove file \`ue4ss.zip'"
-
     ## add below your custom commands if needed
     ## copy template config file
     echo -e "Copy template config file into config folder!"
@@ -253,36 +226,38 @@ install_palserver() {
     if [[ -f "/mnt/server/PalServer/Pal/Saved/Config/WindowsServer/PalWorldSettings.ini" ]]; then
         echo -e "Config file already exists, backing up and overwriting with a new one"
         new_filename="PalWorldSettings_$(date +"%Y%m%d%H%M%S").ini"
-        mv "/mnt/server/PalServer/Pal/Saved/Config/WindowsServer/PalWorldSettings.ini" \
-          "/mnt/server/PalServer/Pal/Saved/Config/WindowsServer/${new_filename}" \
-            || exit_and_message 1 "Failed to move file from \`PalWorldSettings.ini' to \`${new_filename}'"
-        cp "/mnt/server/PalServer/DefaultPalWorldSettings.ini" \
-          "/mnt/server/PalServer/Pal/Saved/Config/WindowsServer/PalWorldSettings.ini" \
-            || exit_and_message 1 "Failed to copy file from \`DefaultPalWorldSettings.ini' to \`PalWorldSettings.ini'"
+        mv "/mnt/server/PalServer/Pal/Saved/Config/WindowsServer/PalWorldSettings.ini" "/mnt/server/PalServer/Pal/Saved/Config/WindowsServer/${new_filename}" || exit_and_message 1 "Failed to move file from \`PalWorldSettings.ini' to \`${new_filename}'"
+        cp "/mnt/server/PalServer/DefaultPalWorldSettings.ini" "/mnt/server/PalServer/Pal/Saved/Config/WindowsServer/PalWorldSettings.ini" || exit_and_message 1 "Failed to copy file from \`DefaultPalWorldSettings.ini' to \`PalWorldSettings.ini'"
     else
         echo -e "Creating new config file"
-        mkdir -p /mnt/server/PalServer/Pal/Saved/Config/LinuxServer \
-          || exit_and_message 1 "Failed to make dirwctory at \`/mnt/server/PalServer/Pal/Saved/Config/LinuxServer'"
-        cp "/mnt/server/PalServer/DefaultPalWorldSettings.ini" \
-          "/mnt/server/PalServer/Pal/Saved/Config/WindowsServer/PalWorldSettings.ini" \
-          || exit_and_message 1 "Failed to copy file from \`DefaultPalWorldSettings.ini' to \`PalWorldSettings.ini'"
+        mkdir -p /mnt/server/PalServer/Pal/Saved/Config/WindowsServer || exit_and_message 1 "Failed to make dirwctory at \`/mnt/server/PalServer/Pal/Saved/Config/LinuxServer'"
+        cp "/mnt/server/PalServer/DefaultPalWorldSettings.ini" "/mnt/server/PalServer/Pal/Saved/Config/WindowsServer/PalWorldSettings.ini" || exit_and_message 1 "Failed to copy file from \`DefaultPalWorldSettings.ini' to \`PalWorldSettings.ini'"
     fi
 
     cd "/mnt/server" || exit_and_message 1 "Failed to change directory to \`/mnt/server'"
-    if [[ ! -f "/mnt/server/PalworldServerConfigParser" ]]; then
+    if [[ ! -f "/mnt/server/PalServer/PalworldServerConfigParser" ]]; then
       # Download self made replace tool
       echo -e "Downloading config parser aplication"
-      curl -sSL -o "PalworldServerConfigParser" -H "Authorization: Bearer ${GITHUB_API_KEY}" \
-        "https://raw.githubusercontent.com/thakyZ/pterodactyl_eggs/master/game_eggs/steamcmd_servers/palworld/PalworldServerConfigParser-linux-amd64" \
-        || exit_and_message 1 "Failed to download file \`PalworldServerConfigParser'"
-      chmod +x "/mnt/server/PalworldServerConfigParser" || exit_and_message 1 "Failed to change permissions in directory \`/mnt/server/PalworldServerConfigParser'"
+      curl -sSL -o "/mnt/server/PalServer/PalworldServerConfigParser" -H "Authorization: Bearer ${GITHUB_API_KEY}" "https://github.com/CuteNatalie/eggs/raw/master/game_eggs/steamcmd_servers/palworld/PalworldServerConfigParser-linux-amd64" || exit_and_message 1 "Failed to download file \`PalworldServerConfigParser'"
+      chmod +x "/mnt/server/PalServer/PalworldServerConfigParser" || exit_and_message 1 "Failed to change permissions in directory \`/mnt/server/PalworldServerConfigParser'"
     fi
   fi
 
+  # Check for Modding Framework files and install if needed
+  if [[ ! -f "/mnt/server/PalServer/Pal/Binaries/Win64/winmm.dll" ]]; then
+    # Setup windows
+    cd /tmp || exit_and_message 1 "Failed to change directory to \`/tmp'"
+    curl -sSL -o "winmm.zip" -H "Authorization: Bearer ${GITHUB_API_KEY}" "https://raw.githubusercontent.com/thakyZ/pterodactyl_eggs/master/game_eggs/steamcmd_servers/palworld/binaries/winmm.zip" || exit_and_message 1 "Failed to download file \`winmm.zip'"
+    curl -sSL -o "ue4ss.zip" -H "Authorization: Bearer ${GITHUB_API_KEY}" "https://github.com/UE4SS-RE/RE-UE4SS/releases/download/v3.0.0/UE4SS_v3.0.0.zip" || exit_and_message 1 "Failed to download file \`ue4ss.zip'"
+    unzip -o winmm.zip -d /mnt/server/PalServer/Pal/Binaries/Win64 || exit_and_message 1 "Failed to unzip file \`winmm.zip'"
+    rm winmm.zip || exit_and_message 1 "Failed to remove file \`winmm.zip'"
+    unzip -o ue4ss.zip -d /mnt/server/PalServer/Pal/Binaries/Win64 || exit_and_message 1 "Failed to unzip file \`ue4ss.zip'"
+    rm ue4ss.zip || exit_and_message 1 "Failed to remove file \`ue4ss.zip'"
+    cd /mnt/server || exit_and_message 1 "Failed to change directory to \`/mnt/server'"
+  fi
+
   if [[ ! -f "/mnt/server/RunPalServer.sh" ]]; then
-    curl -sSL -o "/mnt/server/RunPalServer.sh" -H "Authorization: Bearer ${GITHUB_API_KEY}" \
-      "https://raw.githubusercontent.com/thakyZ/pterodactyl_eggs/master/game_eggs/steamcmd_servers/palworld/w-frills/RunPalServer.sh" \
-      || exit_and_message 1 "Failed to download file \`RunPalServer.sh'"
+    curl -sSL -o "/mnt/server/RunPalServer.sh" -H "Authorization: Bearer ${GITHUB_API_KEY}" "https://raw.githubusercontent.com/thakyZ/pterodactyl_eggs/master/game_eggs/steamcmd_servers/palworld/w-frills/RunPalServer.sh" || exit_and_message 1 "Failed to download file \`RunPalServer.sh'"
   fi
   chmod +x /mnt/server/RunPalServer.sh || exit_and_message 1 "Failed to change permissions in directory \`/mnt/server/RunPalServer.sh'"
 

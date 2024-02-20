@@ -16,8 +16,13 @@ from yaml.dumper import Dumper
 import yaml.representer
 from yaml.representer import ScalarNode
 from yaml import YAMLError
+from typing import Optional
 
 startup_run: bool = str(os.getenv("installing")) == "true"
+
+class Quoted(str):
+    """ Temporary Class Docstring """
+    pass
 
 def validate_bool_str(value: str) -> bool:
     """ Temporary Method Docstring """
@@ -47,7 +52,7 @@ def validate_port_str(value: str) -> str:
 
 def validate_file(value: str) -> Path:
     """ Temporary Method Docstring """
-    return value
+    return Path(value)
     if not startup_run:
         temp_path: Path = Path(value)
         if temp_path.exists() and temp_path.is_file():
@@ -62,7 +67,7 @@ def validate_file(value: str) -> Path:
 
 def validate_file_exists(value: str) -> Path:
     """ Temporary Method Docstring """
-    return value
+    return Path(value)
     temp_path: Path = Path(value)
     if temp_path.exists() and temp_path.is_file():
         return temp_path
@@ -74,7 +79,7 @@ def validate_file_exists(value: str) -> Path:
 
 def validate_directory_exists(value: str) -> Path:
     """ Temporary Method Docstring """
-    return value
+    return Path(value)
     temp_path: Path = Path(value)
     if temp_path.exists() and temp_path.is_dir():
         return temp_path
@@ -84,7 +89,19 @@ def validate_directory_exists(value: str) -> Path:
         raise ArgumentTypeError(f"File {temp_path} does not is not a directory on the file system.")
     raise ArgumentTypeError(f"File {temp_path} has some other issue on the file system.")
 
-if __name__ == "__main__":
+def convert_to_blank_if_none(value: Optional[Any]) -> str:
+    """ Temporary Method Docstring """
+    if value is None:
+        return Quoted("")
+    return Quoted(str(value))
+
+def quoted_presenter(dumper: Dumper, data: Any) -> ScalarNode:
+    """ Temporary Method Docstring """
+    return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='"')
+
+def main():
+    """ Temporary Method Docstring """
+    yaml.add_representer(Quoted, quoted_presenter)
     argparse = ArgumentParser(prog="setup_config", description="Parses arguments from command line and writes to a yaml file.")
     argparse.add_argument("--io", type=validate_file_exists, required=True)
     web_argument_group = argparse.add_argument_group("web", description="")
@@ -92,6 +109,8 @@ if __name__ == "__main__":
     web_argument_group.add_argument("--web_tls", "-t", type=validate_bool_str, required=False)
     web_argument_group.add_argument("--web_cert_path", "-c", type=validate_file, required=False)
     web_argument_group.add_argument("--web_key_path", "-k", type=validate_file, required=False)
+    web_argument_group.add_argument("--web_trusted_proxy", "-b", nargs='+', type=validate_ip_str, required=False)
+    web_argument_group.add_argument("--web_broadcast_address", "-B", type=validate_ip_str, required=False)
     rcon_argument_group = argparse.add_argument_group("rcon", description="")
     rcon_argument_group.add_argument("--rcon_address", "-a", type=validate_ip_str, required=False)
     rcon_argument_group.add_argument("--rcon_port", "-P", type=validate_port_str, required=False)
@@ -109,7 +128,7 @@ if __name__ == "__main__":
     if not config.exists():
         raise FileNotFoundError(f"The file `config.yaml` was not found at path `{config}`")
 
-    yaml_data: dict[str, Any] | None
+    yaml_data: Optional[dict[str, Any]] = None
 
     with config.open("r", encoding="utf8") as stream_read:
         yaml_data = yaml.full_load(stream_read)
@@ -117,34 +136,26 @@ if __name__ == "__main__":
     if yaml_data is None:
         raise YAMLError("Failed to parse config file.")
 
-    def convert_to_blank_if_none(value: Any | None) -> str:
-        """ Temporary Method Docstring """
-        if value is None:
-            return ""
-        return str(value)
-
-    def literal_presenter(dumper: Dumper, data: Any) -> ScalarNode:
-        """ Temporary Method Docstring """
-        if isinstance(data, str) and "\n" in data:
-            return dumper.represent_scalar("tag:yaml.org,2002:str", data, style="|")
-        return dumper.represent_scalar("tag:yaml.org,2002:str", data, style="\"")
-
     if args.web_password is not None:
-        yaml_data["web"]["password"] = args.web_password
+        yaml_data["web"]["password"] = Quoted(args.web_password)
     if args.web_tls is not None:
         yaml_data["web"]["tls"] = args.web_tls
+    if args.web_trusted_proxy is not None:
+        yaml_data["web"]["trusted_proxy"] = args.web_trusted_proxy
+    if args.web_broadcast_address is not None and isinstance(args.web_broadcast_address, list) and len(args.web_broadcast_address) > 0:
+        yaml_data["web"]["broadcast_address"] = args.web_broadcast_address
     if args.web_cert_path is not None:
         yaml_data["web"]["cert_path"] = convert_to_blank_if_none(args.web_cert_path)
     if args.web_key_path is not None:
         yaml_data["web"]["key_path"] = convert_to_blank_if_none(args.web_key_path)
     if args.rcon_address is not None and args.rcon_port is not None:
-        yaml_data["rcon"]["address"] = f"{args.rcon_address}:{args.rcon_port}"
+        yaml_data["rcon"]["address"] = Quoted(f"{args.rcon_address}:{args.rcon_port}")
     elif args.rcon_address is not None:
         current_port = yaml_data["rcon"]["address"].split(":")[1]
-        yaml_data["rcon"]["address"] = f"{args.rcon_address}:{current_port}"
+        yaml_data["rcon"]["address"] = Quoted(f"{args.rcon_address}:{current_port}")
     elif args.rcon_port is not None:
         current_address = yaml_data["rcon"]["address"].split(":")[0]
-        yaml_data["rcon"]["address"] = f"{current_address}:{args.rcon_port}"
+        yaml_data["rcon"]["address"] = Quoted(f"{current_address}:{args.rcon_port}")
     if args.rcon_password is not None:
         yaml_data["rcon"]["password"] = args.rcon_password
     if args.rcon_timeout is not None:
@@ -158,8 +169,9 @@ if __name__ == "__main__":
     if args.save_sync_interval is not None:
         yaml_data["save"]["sync_interval"] = args.save_sync_interval
 
-    yaml.add_representer(str, literal_presenter)
-
     with config.open("w", encoding="utf8") as stream_write:
         yaml.dump(yaml_data, stream_write, default_flow_style=False, allow_unicode=True, encoding="utf8")
         stream_write.close()
+
+if __name__ == "__main__":
+    main()

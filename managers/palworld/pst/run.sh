@@ -3,7 +3,7 @@ current_script=$(echo "\"$0\"" | xargs readlink -f)
 script_directory=$(dirname "${current_script}")
 
 main_function() {
-
+  cd "${script_directory}" || exit 1
   python3 "${script_directory}/setup_config.py" --rcon_address "${INTERNAL_IP}" --io "${script_directory}/config.yaml"
 
   "${script_directory}/pst" &
@@ -22,4 +22,5 @@ main_function() {
   echo -e "Ended"
 }
 
-{ main_function > "${script_directory}/pst.log"; } 2>&1
+# { main_function 2>&1; } | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g" > "${script_directory}/pst.log"
+main_function 2>&1  > "${script_directory}/pst.log"
