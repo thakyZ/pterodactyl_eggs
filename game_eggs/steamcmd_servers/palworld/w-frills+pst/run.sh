@@ -1,26 +1,32 @@
 #!/bin/bash
+
+log_file="/home/container/PST/pst.log"
+backup_log_file="/home/container/PST/pst.2.log"
+
+if [ -f "${log_file}" ]; then
+  mv "${log_file}" "${backup_log_file}"
+fi
+
+exec &> >(tee -a "${log_file}")
+
 current_script=$(echo "\"$0\"" | xargs readlink -f)
 script_directory=$(dirname "${current_script}")
+
+pst_exit_code=-1
 
 main_function() {
   cd "${script_directory}" || exit 1
   python3 "${script_directory}/setup_config.py" --rcon_address "${INTERNAL_IP}" --io "${script_directory}/config.yaml"
 
-  "${script_directory}/pst-agent" --port "${PST_AGENT_PORT}" --file "${PST_SAV_FILE_PATH}/Level.sav" &
-  sleep 100
-  pid=$(pgrep pst)
+  "${script_directory}/pst" &
+  pst_exit_code=$?
 
-  if [[ "${pid:-false}" != "false" ]]; then
-    echo -e "Started"
-  fi
-
-  while [[ "${pid:-false}" != "false" ]]; do
-    pid=$(pgrep pst)
-    sleep 5000
-  done
-
-  echo -e "Ended"
+  echo -e "Stopped"
 }
 
-# { main_function 2>&1; } | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g" > "${script_directory}/pst.log"
-main_function &> "${script_directory}/pst.log"
+dt=$(date '+%d/%m/%Y %H:%M:%S');
+echo -e "\e[34m${dt}\e[39m"
+main_function 2>&1
+dt=$(date '+%d/%m/%Y %H:%M:%S');
+echo -e "\e[34m${dt}\e[39m"
+exit $pst_exit_code
