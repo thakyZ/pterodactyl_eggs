@@ -6,7 +6,7 @@ main_function() {
   cd "${script_directory}" || exit 1
   python3 "${script_directory}/setup_config.py" --rcon_address "${INTERNAL_IP}" --io "${script_directory}/config.yaml"
 
-  "${script_directory}/pst" &
+  "${script_directory}/pst-agent" --port "${PST_AGENT_PORT}" --file "${PST_SAV_FILE_PATH}/Level.sav" &
   sleep 100
   pid=$(pgrep pst)
 

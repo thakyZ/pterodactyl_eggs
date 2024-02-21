@@ -1,0 +1,162 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2024-02-21T11:49:57-05:00",
+    "name": "PalWorld Server Tool",
+    "author": "admin@nekogaming.xyz",
+    "description": "Palworld Server Tool Docker Image",
+    "features": null,
+    "docker_images": {
+        "debain_bookworm": "ghcr.io\/thakyz\/debian:bookworm-slim"
+    },
+    "file_denylist": [],
+    "startup": "\/home\/container\/run.sh",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"Listening on\"\r\n}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n# steamcmd Base Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\n# Image to install with is 'debian:bookworm-slim'\r\n\r\nmain_function() {\r\n  ##\r\n  #\r\n  # Variables\r\n  # STEAM_USER, STEAM_PASS, STEAM_AUTH - Steam user setup. If a user has 2fa enabled it will most likely fail due to timeout. Leave blank for anon install.\r\n  # WINDOWS_INSTALL - if it's a windows server you want to install set to 1\r\n  # SRCDS_APPID - steam app id ffound here - https:\/\/developer.valvesoftware.com\/wiki\/Dedicated_Servers_List\r\n  # EXTRA_FLAGS - when a server has extra glas for things like beta installs or updates.\r\n  #\r\n  ##\r\n  apt update -y\r\n  apt install -y --no-install-recommends ca-certificates curl git unzip zip tar jq wget python3 python3-yaml python3-requests python3-urllib3 lsof net-tools\r\n\r\n  cd \"\/mnt\/server\" || exit 1\r\n  if [[ ! -f \"\/mnt\/server\/download_latest.py\" ]]; then\r\n    wget -q -O \"\/mnt\/server\/download_latest.py\" \"https:\/\/raw.githubusercontent.com\/thakyZ\/pterodactyl_eggs\/master\/managers\/palworld\/download_latest.py\"\r\n  fi\r\n\r\n  if [[ ! -f \"\/mnt\/server\/.env\" ]]; then\r\n    touch \"\/mnt\/server\/.env\"\r\n  fi\r\n\r\n  echo \"${GITHUB_API_KEY}\" > \"\/mnt\/server\/.env\"\r\n\r\n  if [[ ! -d \"\/mnt\/server\/.temp\" ]]; then\r\n    mkdir \"\/mnt\/server\/.temp\"\r\n  fi\r\n\r\n  python3 download_latest.py -o \"\/mnt\/server\/.temp\" --repo \"gh:zaigie\/palworld-server-tool\" --file \"r'pst-agent_v[\\d\\.]+_linux_x86_64'\" \"r'pst_v[\\d\\.]+_linux_x86_64.tar.gz'\"\r\n  exit_code=$?\r\n  echo \"LastExitCode ${exit_code}\"\r\n\r\n  for i in \/mnt\/server\/.temp\/*.tar.gz; do\r\n    tar -C \"\/mnt\/server\" -xvf \"${i}\" || exit 1\r\n    rm \"${i}\"\r\n  done\r\n\r\n  for i in \/mnt\/server\/linux_x86_64\/*; do\r\n    mv \"${i}\" \"\/mnt\/server\/pst-agent\"\r\n  done\r\n  rm -r \"\/mnt\/server\/linux_x86_64\/\"\r\n\r\n  for i in \/mnt\/server\/.temp\/*; do\r\n    if [[ \"${i}\" == \"*pst-agent*\" ]]; then\r\n      mv \"${i}\" \"\/mnt\/server\/pst-agent\"\r\n    fi\r\n  done\r\n\r\n  if [[ \"${exit_code}\" == \"0\" ]]; then\r\n    rm \"\/mnt\/server\/.env\"\r\n    rm -r \"\/mnt\/server\/.temp\/\"\r\n  fi\r\n\r\n  if [[ ! -f \"\/mnt\/server\/config.yaml\" ]]; then\r\n    touch \"\/mnt\/server\/config.yaml\"\r\n  fi\r\n  if [[ ! -f \"\/mnt\/server\/setup_config.py\" ]]; then\r\n    wget -q -O \"\/mnt\/server\/setup_config.py\" \"https:\/\/raw.githubusercontent.com\/thakyZ\/pterodactyl_eggs\/master\/managers\/palworld\/pst\/setup_config.py\"\r\n  fi\r\n  command=\"python3 \\\"\/mnt\/server\/setup_config.py\\\" --web_password \\\"${PASSWORD}\\\" --web_tls \\\"${ENABLE_TLS:-false}\\\"\"\r\n  if [[ \"${ENABLE_TLS:-false}\" == \"true\" ]]; then\r\n   command=\"${command} --web_cert_path \\\"${CERT_PATH}\\\" --web_key_path \\\"${KEY_PATH}\\\"\"\r\n  fi\r\n  command=\"${command} --rcon_address \\\"${INTERNAL_IP:-127.0.0.1}\\\" --rcon_port \\\"${RCON_PORT:-25575}\\\" --rcon_timeout \\\"${RCON_TIMEOUT:-5}\\\" --rcon_sync_interval \\\"${RCON_SYNC_INTERVAL:-60}\\\"\"\r\n  command=\"${command} --rcon_password \\\"${RCON_PASSWORD}\\\"\"\r\n  command=\"${command} --save_path \\\"${SAV_FILE_PATH:-\/path\/to\/you\/Level.sav}\\\" --save_decode_path \\\"${SAV_CLI:-\/path\/to\/your\/sav_cli}\\\" --save_sync_interval \\\"${SAV_SYNC_INTERVAL:-120}\\\"\"\r\n  command=\"${command} --io \\\"\/mnt\/server\/config.yaml\\\"\"\r\n  eval \"${command}\"\r\n  \r\n  read -r -d '' run_script << EOL\r\n#!\/bin\/bash\r\n\r\npython3 .\/setup_config.py --rcon_address \"${INTERNAL_IP}\" --io \".\/config.yaml\"\r\n\r\n.\/pst &\r\nsleep 100\r\npid=$(pgrep pst)\r\n\r\nif [[ \"${pid:-false}\" != \"false\" ]]; do\r\n  printf \"Started\\n\"\r\nfi\r\n\r\nwhile [[ \"${pid:-false}\" != \"false\" ]]; do\r\n  pid=$(pgrep pst)\r\n  sleep 5000\r\ndone\r\n\r\nprintf \"Ended\\n\"\r\nEOL\r\n  echo \"${run_script}\" > \/mnt\/server\/run.sh\r\n  chmod +x \/mnt\/server\/run.sh\r\n\r\n  ## install end\r\n  echo \"-----------------------------------------\"\r\n  echo \"Installation completed...\"\r\n  echo \"-----------------------------------------\"\r\n\r\n  lsof -i :11000 2>&1\r\n  lsof -i :11001 2>&1\r\n  lsof -i :11002 2>&1\r\n  lsof -i :11003 2>&1\r\n  ifconfig 2>&1\r\n}\r\n\r\nmain_function 2>&1 | tee \/mnt\/server\/install.log",
+            "container": "debian:bookworm-slim",
+            "entrypoint": "\/bin\/bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Web Management Password",
+            "description": "Web management mode password",
+            "env_variable": "PASSWORD",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Enable TLS",
+            "description": "Whether to enable TLS",
+            "env_variable": "ENABLE_TLS",
+            "default_value": "false",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|in:true,false",
+            "field_type": "text"
+        },
+        {
+            "name": "Cert File Path",
+            "description": "Cert File Path",
+            "env_variable": "CERT_PATH",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "nullable|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Key File Path",
+            "description": "Key File Path",
+            "env_variable": "KEY_PATH",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "nullable|string",
+            "field_type": "text"
+        },
+        {
+            "name": "RCON Address",
+            "description": "",
+            "env_variable": "RCON_ADDRESS",
+            "default_value": "127.0.0.1",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "RCON Port",
+            "description": "",
+            "env_variable": "RCON_PORT",
+            "default_value": "25575",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|numeric|min:255|max:65535",
+            "field_type": "text"
+        },
+        {
+            "name": "RCON Password",
+            "description": "Set AdminPassword",
+            "env_variable": "RCON_PASSWORD",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "RCON Request Timeout",
+            "description": "recommended <= 5",
+            "env_variable": "RCON_TIMEOUT",
+            "default_value": "5",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|numeric|min:1",
+            "field_type": "text"
+        },
+        {
+            "name": "RCON Sync Interval",
+            "description": "Interval for syncing online player status with RCON service, in seconds",
+            "env_variable": "RCON_SYNC_INTERVAL",
+            "default_value": "60",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|numeric|min:5",
+            "field_type": "text"
+        },
+        {
+            "name": "Save File Path",
+            "description": "",
+            "env_variable": "SAV_FILE_PATH",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Save File Parsing Tool Path",
+            "description": "Usually in the same directory as pst",
+            "env_variable": "SAV_CLI",
+            "default_value": "\/home\/container\/sav_cli",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Save File Sync Interval",
+            "description": "Interval for syncing data from save file, in seconds, recommended >= 120",
+            "env_variable": "SAV_SYNC_INTERVAL",
+            "default_value": "120",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|numeric|min:1",
+            "field_type": "text"
+        },
+        {
+            "name": "GitHub API Key",
+            "description": "An API key from GitHub for downloading the latest release",
+            "env_variable": "GITHUB_API_KEY",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|min:20",
+            "field_type": "text"
+        }
+    ]
+}

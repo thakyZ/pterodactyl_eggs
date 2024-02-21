@@ -1,0 +1,158 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2024-02-21T11:51:24-05:00",
+    "name": "Palworld w\/ Frills",
+    "author": "admin@nekogaming.xyz",
+    "description": "Fight, farm, build and work alongside mysterious creatures called \"Pals\" in this completely new multiplayer, open world survival and crafting game!\r\nIncludes extra components.",
+    "features": [
+        "steam_disk_space"
+    ],
+    "docker_images": {
+        "Wine_Latest": "quay.io\/parkervcp\/pterodactyl-images:debian_wine",
+        "SteamCMD_Wine": "ghcr.io\/thakyz\/steamcmd:proton",
+        "Wine_Staging": "ghcr.io\/cutenatalie\/steamcmd:proton"
+    },
+    "file_denylist": [
+        "PalServer.sh"
+    ],
+    "startup": ".\/PalServer\/PalworldServerConfigParser; (while read cmd; do rcon -s -a \"localhost:$RCON_PORT\" -p \"$ADMIN_PASSWORD\" \"$cmd\";done) < \/dev\/stdin & \/home\/container\/RunPalServer.sh",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"esync: up and running\"\r\n}",
+        "logs": "{}",
+        "stop": "shutdown 15"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n# steamcmd Base Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\n# Image to install with is 'ghcr.io\/parkervcp\/installers:debian'\r\n\r\n# NOTES:\r\n# Big thanks to Natalie on the PalWorld Modding Discord for already creating a working wine setup.\r\n\r\nATTRIBUTE_RESET=\"\\e[0m\"\r\nCOLOR_DEFAULT=\"\\e[39m\"\r\nCOLOR_GREEN=\"\\e[32m\"\r\nCOLOR_RED=\"\\e[31m\"\r\n\r\nexit_and_message() {\r\n  local exit_code=$1\r\n  local message=( \"${@:2}\" )\r\n  local color=\"${COLOR_DEFAULT}\"\r\n\r\n  if [[ \"${exit_code}\" == 1 ]]; then\r\n    color=\"${COLOR_RED}\"\r\n  fi\r\n\r\n  for m in \"${message[@]}\"; do\r\n    echo -e \"${ATTRIBUTE_RESET}${color}${m}${ATTRIBUTE_RESET}\"\r\n  done\r\n  echo -e \"${ATTRIBUTE_RESET}The last exit code was: \\`${color}${exit_code}${ATTRIBUTE_RESET}'\"\r\n\r\n  # shellcheck disable=SC2086\r\n  exit $exit_code\r\n}\r\n\r\nmain_function() {\r\n  ##\r\n  #\r\n  # Variables\r\n  # STEAM_USER, STEAM_PASS, STEAM_AUTH - Steam user setup. If a user has 2fa enabled it will most likely fail due to timeout. Leave blank for anon install.\r\n  # WINDOWS_INSTALL - if it's a windows server, you want to install set to 1\r\n  # SRCDS_APPID - steam app id found here - https:\/\/developer.valvesoftware.com\/wiki\/Dedicated_Servers_List\r\n  # SRCDS_BETAID - the beta id for the steam app.\r\n  # SRCDS_BETAPASS - the beta access password for the steam app.\r\n  # EXTRA_FLAGS - when a server has extra glas for things like beta installs or updates.\r\n  # AUTO_UPDATE - auto update the server on start.\r\n  # NEXUS_API_KEY - your personal api key for nexus mods to download the extra frills. (unused for now)\r\n  # GITHUB_API_KEY - your personal github api key for downloading the latest release.\r\n  # WINETRICKS_RUN - install extra winetricks packages.\r\n  #\r\n  ##\r\n  #\r\n  # Palworld Variables\r\n  # MAX_PLAYERS - maximum number of players allowed on the server.\r\n  # SERVER_NAME - the display name of the server.\r\n  # SERVER_PASSWORD - the password for the server.\r\n  # ADMIN_PASSWORD - the admin password for the server.\r\n  # PUBLIC_IP - the public, external, ip of the server.\r\n  # RCON_PORT - the rcon port of the server.\r\n  # RCON_ENABLE - when the server starts, enable rcon. must be on.\r\n  # ENABLE_ENEMY - turns off or on bEnableInvaderEnemy, can be used to slow download memory leaks. off should slow down the memory leaks.\r\n  # SERVER_DESCRIPTION - the description of the server.\r\n  #\r\n  ##\r\n  #\r\n  # Palworld Server Tools Variables\r\n  # PST_ENABLE_TLS - when the server starts, enable tls.\r\n  # PST_CERT_PATH - the file path to the tls certificate.\r\n  # PST_KEY_PATH - the file path to the tls private key.\r\n  # PST_RCON_TIMEOUT - recommended <= 5\r\n  # PST_RCON_SYNC_INTERVAL - interval for syncing online player status with rcon service, in seconds.\r\n  # PST_SAV_FILE_PATH - the path to the save file folder. the folder must contain a file called `Level.sav`.\r\n  # PST_SAV_CLI - the path to the `sav_cli` command for palworld server tools. Usually is in the same directory as the `pst` command.\r\n  # PST_SAV_SYNC_INTERVAL - interval for syncing data from save file, in seconds, recommended >= 120\r\n  #\r\n  ##\r\n  export DEBIAN_FRONTEND=noninteractive\r\n\r\n  apt -y update\r\n  dpkg --add-architecture i386\r\n  apt -y --no-install-recommends install curl lib32gcc-s1 ca-certificates gnupg wget software-properties-common unzip gnupg2 ca-certificates curl git unzip zip tar jq wget python3 python3-yaml python3-requests python3-urllib3 lsof net-tools\r\n\r\n  ## just in case someone removed the defaults.\r\n  if [[ \"${STEAM_USER}\" == \"\" ]] || [[ \"${STEAM_PASS}\" == \"\" ]]; then\r\n      echo -e \"steam user is not set.\\n\"\r\n      echo -e \"Using anonymous user.\\n\"\r\n      export STEAM_USER=anonymous\r\n      export STEAM_PASS=\"\"\r\n      export STEAM_AUTH=\"\"\r\n  else\r\n      echo -e \"user set to ${STEAM_USER}\"\r\n  fi\r\n\r\n  # Setup github downloader.\r\n  cd \"\/mnt\/server\" || exit_and_message 1 \"Failed to go to directory \\`\/mnt\/server'\"\r\n  if [[ ! -f \"\/mnt\/server\/download_latest.py\" ]]; then\r\n    curl -sSL -o \"\/mnt\/server\/download_latest.py\" \"https:\/\/raw.githubusercontent.com\/thakyZ\/pterodactyl_eggs\/master\/managers\/palworld\/download_latest.py\" || exit_and_message 1 \"Failed to download file \\`download_latest.py'\"\r\n  fi\r\n\r\n  if [[ ! -f \"\/mnt\/server\/.env\" ]]; then\r\n    touch \"\/mnt\/server\/.env\" || exit_and_message 1 \"Failed to create file at \\`\/mnt\/server\/.env'\"\r\n  fi\r\n\r\n  echo \"${GITHUB_API_KEY}\" > \"\/mnt\/server\/.env\"\r\n\r\n  install_palserver || exit_and_message 1 \"Failed run function \\`install_palserver'\"\r\n  rm \"\/mnt\/server\/.env\" || exit_and_message 1 \"Failed remove file at \\`\/mnt\/server\/.env'\"\r\n\r\n  ## install end\r\n  echo -e \"${COLOR_GREEN}------------------------------------------${ATTRIBUTE_RESET}\"\r\n  echo -e \"${COLOR_GREEN}Installation completed...                 ${ATTRIBUTE_RESET}\"\r\n  echo -e \"${COLOR_GREEN}------------------------------------------${ATTRIBUTE_RESET}\"\r\n}\r\n\r\ninstall_palserver() {\r\n  local WINDOWS_INSTALL_OPT=\"\"\r\n  local SRCDS_BETAID_OPT=\"\"\r\n  local SRCDS_BETAPASS_OPT=\"\"\r\n  local exit_code=-1\r\n  ## download and install steamcmd\r\n  cd \/tmp || exit_and_message 1 \"Failed to change directory to \\`\/tmp'\"\r\n  mkdir -p \/mnt\/server\/steamcmd || exit_and_message 1 \"Failed to make directory at \\`\/mnt\/server\/steamcmd'\"\r\n  curl -sSL -o steamcmd.tar.gz https:\/\/steamcdn-a.akamaihd.net\/client\/installer\/steamcmd_linux.tar.gz || exit_and_message 1 \"Failed to download file \\`steamcmd.tar.gz'\"\r\n  tar -xzvf steamcmd.tar.gz -C \/mnt\/server\/steamcmd || exit_and_message 1 \"Failed to download file \\`steamcmd.tar.gz'\"\r\n  mkdir -p \/mnt\/server\/steamapps || exit_and_message 1 \"Failed to create directory to \\`\/mnt\/server\/steamapps'\" # Fix steamcmd disk write error when this folder is missing\r\n  cd \/mnt\/server\/steamcmd || exit_and_message 1 \"Failed to change directory to \\`\/mnt\/server\/steamcmd'\"\r\n\r\n  # SteamCMD fails otherwise for some reason, even running as root.\r\n  # This is changed at the end of the install process anyways.\r\n  chown -R root:root \/mnt || exit_and_message 1 \"Failed to change permissions in directory \\`\/mnt'\"\r\n  export HOME=\/mnt\/server\r\n\r\n  ## install game using steamcmd\r\n  if [[ \"${WINDOWS_INSTALL}\" == \"1\" ]]; then\r\n    WINDOWS_INSTALL_OPT=\"+@sSteamCmdForcePlatformType windows\"\r\n  fi\r\n  if [[ -z ${SRCDS_BETAID} ]]; then\r\n    SRCDS_BETAID_OPT=\"-beta ${SRCDS_BETAID}\"\r\n  fi\r\n  if [[ -z ${SRCDS_BETAPASS} ]]; then\r\n    SRCDS_BETAPASS_OPT=\"-beta ${SRCDS_BETAPASS}\"\r\n  fi\r\n  eval \".\/steamcmd.sh +force_install_dir ${STEAMCMD_INSTALLDIR:-\/mnt\/server\/PalServer} +login ${STEAM_USER} ${STEAM_PASS} ${STEAM_AUTH} ${WINDOWS_INSTALL_OPT} +app_update ${SRCDS_APPID} ${SRCDS_BETAID_OPT} ${SRCDS_BETAPASS_OPT} ${INSTALL_FLAGS} validate +quit\" ## other flags may be needed depending on install. looking at you cs 1.6\r\n  exit_code=$?\r\n  if [[ \"${exit_code}\" != \"0\" ]]; then\r\n    exit_and_message $exit_code \"Failed to run command \\`steamcmd.sh'\"\r\n  fi\r\n\r\n  ## set up 32 bit libraries\r\n  mkdir -p \/mnt\/server\/.steam\/sdk32\r\n  cp -v linux32\/steamclient.so ..\/.steam\/sdk32\/steamclient.so\r\n\r\n  ## set up 64 bit libraries\r\n  mkdir -p \/mnt\/server\/.steam\/sdk64\r\n  cp -v linux64\/steamclient.so ..\/.steam\/sdk64\/steamclient.so\r\n\r\n  if [[ \"${WINDOWS_INSTALL}\" == \"1\" ]]; then\r\n    ## add below your custom commands if needed\r\n    ## copy template config file\r\n    echo -e \"Copy template config file into config folder!\"\r\n\r\n    if [[ -f \"\/mnt\/server\/PalServer\/Pal\/Saved\/Config\/WindowsServer\/PalWorldSettings.ini\" ]]; then\r\n        echo -e \"Config file already exists, backing up and overwriting with a new one\"\r\n        new_filename=\"PalWorldSettings_$(date +\"%Y%m%d%H%M%S\").ini\"\r\n        mv \"\/mnt\/server\/PalServer\/Pal\/Saved\/Config\/WindowsServer\/PalWorldSettings.ini\" \"\/mnt\/server\/PalServer\/Pal\/Saved\/Config\/WindowsServer\/${new_filename}\" || exit_and_message 1 \"Failed to move file from \\`PalWorldSettings.ini' to \\`${new_filename}'\"\r\n        cp \"\/mnt\/server\/PalServer\/DefaultPalWorldSettings.ini\" \"\/mnt\/server\/PalServer\/Pal\/Saved\/Config\/WindowsServer\/PalWorldSettings.ini\" || exit_and_message 1 \"Failed to copy file from \\`DefaultPalWorldSettings.ini' to \\`PalWorldSettings.ini'\"\r\n    else\r\n        echo -e \"Creating new config file\"\r\n        mkdir -p \/mnt\/server\/PalServer\/Pal\/Saved\/Config\/LinuxServer || exit_and_message 1 \"Failed to make dirwctory at \\`\/mnt\/server\/PalServer\/Pal\/Saved\/Config\/LinuxServer'\"\r\n        cp \"\/mnt\/server\/PalServer\/DefaultPalWorldSettings.ini\" \"\/mnt\/server\/PalServer\/Pal\/Saved\/Config\/WindowsServer\/PalWorldSettings.ini\" || exit_and_message 1 \"Failed to copy file from \\`DefaultPalWorldSettings.ini' to \\`PalWorldSettings.ini'\"\r\n    fi\r\n\r\n    cd \"\/mnt\/server\" || exit_and_message 1 \"Failed to change directory to \\`\/mnt\/server'\"\r\n    if [[ ! -f \"\/mnt\/server\/PalServer\/PalworldServerConfigParser\" ]]; then\r\n      # Download self made replace tool\r\n      echo -e \"Downloading config parser aplication\"\r\n      curl -sSL -o \"\/mnt\/server\/PalServer\/PalworldServerConfigParser\" -H \"Authorization: Bearer ${GITHUB_API_KEY}\" \"https:\/\/raw.githubusercontent.com\/thakyZ\/pterodactyl_eggs\/master\/game_eggs\/steamcmd_servers\/palworld\/PalworldServerConfigParser-linux-amd64\" || exit_and_message 1 \"Failed to download file \\`PalworldServerConfigParser'\"\r\n      chmod +x \"\/mnt\/server\/PalServer\/PalworldServerConfigParser\" || exit_and_message 1 \"Failed to change permissions in directory \\`\/mnt\/server\/PalworldServerConfigParser'\"\r\n    fi\r\n  fi\r\n\r\n  # Check for Modding Framework files and install if needed\r\n  if [[ ! -f \"\/mnt\/server\/PalServer\/Pal\/Binaries\/Win64\/winmm.dll\" ]]; then\r\n    # Setup windows\r\n    cd \/tmp || exit_and_message 1 \"Failed to change directory to \\`\/tmp'\"\r\n    curl -sSL -o \"winmm.zip\" -H \"Authorization: Bearer ${GITHUB_API_KEY}\" \"https:\/\/raw.githubusercontent.com\/thakyZ\/pterodactyl_eggs\/master\/game_eggs\/steamcmd_servers\/palworld\/binaries\/winmm.zip\" || exit_and_message 1 \"Failed to download file \\`winmm.zip'\"\r\n    curl -sSL -o \"ue4ss.zip\" -H \"Authorization: Bearer ${GITHUB_API_KEY}\" \"https:\/\/github.com\/UE4SS-RE\/RE-UE4SS\/releases\/download\/v3.0.0\/UE4SS_v3.0.0.zip\" || exit_and_message 1 \"Failed to download file \\`ue4ss.zip'\"\r\n    unzip -o winmm.zip -d \/mnt\/server\/PalServer\/Pal\/Binaries\/Win64 || exit_and_message 1 \"Failed to unzip file \\`winmm.zip'\"\r\n    rm winmm.zip || exit_and_message 1 \"Failed to remove file \\`winmm.zip'\"\r\n    unzip -o ue4ss.zip -d \/mnt\/server\/PalServer\/Pal\/Binaries\/Win64 || exit_and_message 1 \"Failed to unzip file \\`ue4ss.zip'\"\r\n    rm ue4ss.zip || exit_and_message 1 \"Failed to remove file \\`ue4ss.zip'\"\r\n    cd \/mnt\/server || exit_and_message 1 \"Failed to change directory to \\`\/mnt\/server'\"\r\n  fi\r\n\r\n  if [[ ! -f \"\/mnt\/server\/RunPalServer.sh\" ]]; then\r\n    curl -sSL -o \"\/mnt\/server\/RunPalServer.sh\" -H \"Authorization: Bearer ${GITHUB_API_KEY}\" \"https:\/\/raw.githubusercontent.com\/thakyZ\/pterodactyl_eggs\/master\/game_eggs\/steamcmd_servers\/palworld\/w-frills\/RunPalServer.sh\" || exit_and_message 1 \"Failed to download file \\`RunPalServer.sh'\"\r\n  fi\r\n  chmod +x \/mnt\/server\/RunPalServer.sh || exit_and_message 1 \"Failed to change permissions in directory \\`\/mnt\/server\/RunPalServer.sh'\"\r\n\r\n  ## install end\r\n  echo -e \"${COLOR_GREEN}------------------------------------------------------${ATTRIBUTE_RESET}\"\r\n  echo -e \"${COLOR_GREEN}PalServer - Installation completed...                 ${ATTRIBUTE_RESET}\"\r\n  echo -e \"${COLOR_GREEN}------------------------------------------------------${ATTRIBUTE_RESET}\"\r\n}\r\n\r\nmain_function 2>&1 | tee \/mnt\/server\/install.log",
+            "container": "ghcr.io\/parkervcp\/installers:debian",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "App ID",
+            "description": "Do not edit!",
+            "env_variable": "SRCDS_APPID",
+            "default_value": "2394010",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|in:2394010",
+            "field_type": "text"
+        },
+        {
+            "name": "Auto Update",
+            "description": "Auto update the server on start.",
+            "env_variable": "AUTO_UPDATE",
+            "default_value": "1",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "Max Players",
+            "description": "",
+            "env_variable": "MAX_PLAYERS",
+            "default_value": "32",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|numeric|between:1,32",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Name",
+            "description": "",
+            "env_variable": "SERVER_NAME",
+            "default_value": "A Pterodactyl hosted Palworld Server",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:64",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Password",
+            "description": "If specified, players must provide this password to join the server.",
+            "env_variable": "SERVER_PASSWORD",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|alpha_dash|between:1,30",
+            "field_type": "text"
+        },
+        {
+            "name": "Admin Password",
+            "description": "If specified, players must provide this password (via the in-game chat or RCON) to gain access to administrator commands on the server.",
+            "env_variable": "ADMIN_PASSWORD",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|alpha_dash|between:1,30",
+            "field_type": "text"
+        },
+        {
+            "name": "Public IP",
+            "description": "Set this to the servers public ip address.",
+            "env_variable": "PUBLIC_IP",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": false,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "RCON Port",
+            "description": "Does not need to be allocated!",
+            "env_variable": "RCON_PORT",
+            "default_value": "25575",
+            "user_viewable": true,
+            "user_editable": false,
+            "rules": "required|numeric",
+            "field_type": "text"
+        },
+        {
+            "name": "Enable RCON",
+            "description": "Must Be ON",
+            "env_variable": "RCON_ENABLE",
+            "default_value": "True",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|in:True",
+            "field_type": "text"
+        },
+        {
+            "name": "bEnableInvaderEnemy",
+            "description": "Turns off or on bEnableInvaderEnemy,\r\nCan be used to slow download memory leaks.\r\nOff should slow down the memory leaks.",
+            "env_variable": "ENABLE_ENEMY",
+            "default_value": "True",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|in:True,False",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Description",
+            "description": "The description of the server.",
+            "env_variable": "SERVER_DESCRIPTION",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string|max:128",
+            "field_type": "text"
+        },
+        {
+            "name": "Nexus Mods API Key",
+            "description": "API key for Nexus mods to download the extra frills.",
+            "env_variable": "NEXUS_API",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "nullable|string|max:128",
+            "field_type": "text"
+        }
+    ]
+}
