@@ -19,9 +19,11 @@ jobs:
     env:
       REPO_OWNER: "CuteNatalie"
       REPO_NAME: "Palworld-Modded-Server-Linux"
+      REPO_URL: ""
+      DoUpdate: ""
     steps:
       - run: |
-          echo "REPO_URLhttps://github.com/${{ env.REPO_OWNER }}/${{ env.REPO_NAME }}.git" >> $GITHUB_ENV
+          echo "REPO_URL=https://github.com/${{ env.REPO_OWNER }}/${{ env.REPO_NAME }}.git" >> $GITHUB_ENV
       - name: Checkout Current Repository
         uses: actions/checkout@v4
         with:
