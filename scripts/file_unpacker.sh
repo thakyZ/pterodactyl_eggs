@@ -1,3 +1,4 @@
+#!/bin/bash
 ## only needs to have the file with a file passed into it to get the filetype.
 ## only supports tar.gz/xz and zip currently for unpacking.
 ## The value for ${DOWNLOAD_LINK##*/} is derived from DOWNLOAD_LINK
@@ -8,14 +9,14 @@ apt install -y curl file unzip
 
 curl -sSL ${DOWNLOAD_LINK}
 
-FILETYPE=$(file -F ',' ${DOWNLOAD_LINK##*/} | cut -d',' -f2 | cut -d' ' -f2)
+FILETYPE=$(file -F ',' "${DOWNLOAD_LINK##*/}" | cut -d',' -f2 | cut -d' ' -f2)
 if [ "$FILETYPE" == "gzip" ]; then
-    tar xzvf ${DOWNLOAD_LINK##*/}
+    tar xzvf "${DOWNLOAD_LINK##*/}"
 elif [ "$FILETYPE" == "Zip" ]; then
-    unzip -o ${DOWNLOAD_LINK##*/}
+    unzip -o "${DOWNLOAD_LINK##*/}"
 elif [ "$FILETYPE" == "XZ" ]; then
-    tar xvf ${DOWNLOAD_LINK##*/}
+    tar xvf "${DOWNLOAD_LINK##*/}"
 else
     echo -e "unknown filetype. Exeting"
-    exit 2 
+    exit 2
 fi

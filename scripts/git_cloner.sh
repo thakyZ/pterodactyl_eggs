@@ -1,3 +1,4 @@
+#!/bin/bash
 ## clone git repos
 ## supports both github and gitlab
 ## supports using a personal access token to run git pull
@@ -6,7 +7,7 @@ apt update
 apt install -y git curl jq file unzip
 
 mkdir -p /mnt/server
-cd /mnt/server
+cd /mnt/server || exit 1
 
 if [ "${USER_UPLOAD}" == "true" ] || [ "${USER_UPLOAD}" == "1" ]; then
     echo -e "assuming user knows what they are doing have a good day."
@@ -21,7 +22,7 @@ fi
 if [ -z "${USERNAME}" ] && [ -z "${ACCESS_TOKEN}" ]; then
     echo -e "using anon api call"
 else
-    GIT_ADDRESS="https://${USERNAME}:${ACCESS_TOKEN}@$(echo -e ${GIT_ADDRESS} | cut -d/ -f3-)"
+    GIT_ADDRESS="https://${USERNAME}:${ACCESS_TOKEN}@$(echo -e "${GIT_ADDRESS}" | cut -d/ -f3-)"
 fi
 
 ## pull git js bot repo
@@ -45,11 +46,11 @@ if [ "$(ls -A /mnt/server)" ]; then
     fi
 else
     echo -e "/mnt/server is empty.\ncloning files into repo"
-    if [ -z ${BRANCH} ]; then
+    if [ -z "${BRANCH}" ]; then
         echo -e "cloning default branch"
-        git clone ${GIT_ADDRESS} .
+        git clone "${GIT_ADDRESS}" .
     else
         echo -e "cloning ${BRANCH}'"
-        git clone --single-branch --branch ${BRANCH} ${GIT_ADDRESS} .
+        git clone --single-branch --branch "${BRANCH}" "${GIT_ADDRESS}" .
     fi
 fi

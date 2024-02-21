@@ -46,16 +46,22 @@ If you are reading this it looks like you are looking to add an egg to your serv
 * [Starbound](/game_eggs/starbound/game)
 * [StarrPy3k](/game_eggs/starbound/starrpy)
 
-[SteamdCMD Servers](/game_eggs/steamcmd_servers)
+[SteamCMD Servers](/game_eggs/steamcmd_servers)
 
 * [Palworld](/game_eggs/steamcmd_servers/Palworld)
 
 ## [System](/system/)
 
-### NodeJS
+### [NodeJS](/nodejs/)
 
-* [Flame](/system/flame)
-* [Generic](/system/generic)
+* [Flame](/system/nodejs/flame)
+* [Generic](/system/nodejs/generic)
+
+## [Managers](/managers/)
+
+### [Palworld](/managers/palworld/)
+
+* [Palworld Server Tool](/managers/palworld/pst)
 
 ## Other Links
 

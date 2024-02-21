@@ -1,9 +1,11 @@
 # Palworld
 
-### Steam Description
+## Steam Description
+
 Fight, farm, build and work alongside mysterious creatures called "Pals" in this completely new multiplayer, open world survival and crafting game!
 
-### Authors / Contributors
+## Authors / Contributors
+
 <table>
     <tr>
         <td align="center">
@@ -48,14 +50,14 @@ Fight, farm, build and work alongside mysterious creatures called "Pals" in this
             </a>
             <br />
             <a href="https://github.com/parkervcp/eggs/issues/2669#issuecomment-1900100992" title="Codes">💻</a>
-        </td>  
+        </td>
         <td align="center">
             <a href="https://github.com/Rodhin">
                 <img src="https://avatars.githubusercontent.com/u/13395074" width="50px;" alt=""/><br /><sub><b>Rodhin</b></sub>
             </a>
             <br />
             <a href="https://github.com/parkervcp/eggs/issues/2669#issuecomment-1900153550" title="Codes">💻</a>
-        </td> 
+        </td>
         <td align="center">
             <a href="https://github.com/B0rbor4d">
                 <img src="https://avatars.githubusercontent.com/u/33213807" width="50px;" alt=""/><br /><sub><b>B0rbor4d</b></sub>
@@ -69,7 +71,7 @@ Fight, farm, build and work alongside mysterious creatures called "Pals" in this
             </a>
             <br />
             <a href="https://github.com/parkervcp/eggs/issues/2669#issuecomment-1899954711" title="Contributor">💡</a>
-        </td>         
+        </td>
     </tr>
 </table>
 
@@ -114,7 +116,7 @@ As of January 19th 2024 the server requires about 5GB of storage capacity. This 
 
 The RCON port does not need to be allocated.
 
-# Things to watch:
+## Things To Watch
 
-[PalWorld-Server-Unoffical-Api](https://github.com/VeroFess/PalWorld-Server-Unoffical-Api/)
-[Palworld-Modded-Server-Linux](https://github.com/CuteNatalie/Palworld-Modded-Server-Linux)
+[VeroFess/PalWorld-Server-Unoffical-Api](https://github.com/VeroFess/PalWorld-Server-Unoffical-Api/)
+[CuteNatalie/Palworld-Modded-Server-Linux](https://github.com/CuteNatalie/Palworld-Modded-Server-Linux)

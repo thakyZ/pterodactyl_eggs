@@ -1,6 +1,6 @@
 # Example Server Name
 
-<!--Please remove these comments and irelevent parts for the server egg your adding before summiting a PR request-->
+<!--Please remove these comments and irrelevant parts for the server egg your adding before submitting a PR request-->
 
 ## From their [Github](https://github.com/parkervcp/eggs)
 
@@ -8,7 +8,7 @@ A link to the site that you download the server files from.
 
 ## [Documentation](https://github.com/parkervcp/eggs/blob/master/README.md)
 
-A link to relevent documentation for the server.
+A link to relevant documentation for the server.
 
 The description of the server usually provided by the game/server maker.
 <!--Example: Parkers Pterodactyl Eggs Repo. Server eggs for the Pterodactyl management panel-->
@@ -23,7 +23,7 @@ Due to rate limiting the console on the panel, it cannot keep up with the game c
 Minimum required memory to run the server.
 <!--Example: 2GB is recommended. 4GB+ is preferred-->
 
-## Minumim Sorage warning
+## Minumum Storage warning
 
 Minimum required storage to run the server.
 <!--Example: 10GB is recommended. 25GB+ is preferred-->

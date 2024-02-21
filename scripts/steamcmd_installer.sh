@@ -33,20 +33,34 @@ else
 fi
 
 ## download and install steamcmd
-cd /tmp
+cd /tmp || exit 1
 mkdir -p /mnt/server/steamcmd
 curl -sSL -o steamcmd.tar.gz https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz
 tar -xzvf steamcmd.tar.gz -C /mnt/server/steamcmd
 mkdir -p /mnt/server/steamapps # Fix steamcmd disk write error when this folder is missing
-cd /mnt/server/steamcmd
+cd /mnt/server/steamcmd || exit 1
 
 # SteamCMD fails otherwise for some reason, even running as root.
 # This is changed at the end of the install process anyways.
 chown -R root:root /mnt
 export HOME=/mnt/server
 
+if [[ "${WINDOWS_INSTALL}" == "1" ]]; then
+    WINDOWS_INSTALL_OPT="+@sSteamCmdForcePlatformType windows"
+fi
+if [[ -z ${SRCDS_BETAID} ]]; then
+    SRCDS_BETAID_OPT="-beta ${SRCDS_BETAID}"
+fi
+if [[ -z ${SRCDS_BETAPASS} ]]; then
+    SRCDS_BETAPASS_OPT="-beta ${SRCDS_BETAPASS}"
+fi
+
 ## install game using steamcmd
-./steamcmd.sh +force_install_dir /mnt/server +login ${STEAM_USER} ${STEAM_PASS} ${STEAM_AUTH} $( [[ "${WINDOWS_INSTALL}" == "1" ]] && printf %s '+@sSteamCmdForcePlatformType windows' ) +app_update ${SRCDS_APPID} $( [[ -z ${SRCDS_BETAID} ]] || printf %s "-beta ${SRCDS_BETAID}" ) $( [[ -z ${SRCDS_BETAPASS} ]] || printf %s "-betapassword ${SRCDS_BETAPASS}" ) ${INSTALL_FLAGS} validate +quit ## other flags may be needed depending on install. looking at you cs 1.6
+eval "./steamcmd.sh +force_install_dir ${STEAMCMD_INSTALLDIR:-/mnt/server} +login ${STEAM_USER} ${STEAM_PASS} ${STEAM_AUTH} ${WINDOWS_INSTALL_OPT} +app_update ${SRCDS_APPID} ${SRCDS_BETAID_OPT} ${SRCDS_BETAPASS_OPT} ${INSTALL_FLAGS} validate +quit" ## other flags may be needed depending on install. looking at you cs 1.6
+exit_code=$?
+if [[ "${exit_code}" != "0" ]]; then
+exit_and_message $exit_code "Failed to run command \`steamcmd.sh'"
+fi
 
 ## set up 32 bit libraries
 mkdir -p /mnt/server/.steam/sdk32
