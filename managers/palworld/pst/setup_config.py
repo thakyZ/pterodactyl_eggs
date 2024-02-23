@@ -92,7 +92,7 @@ def validate_directory_exists(value: str) -> Path:
 def convert_to_blank_if_none(value: Optional[Any]) -> str:
     """ Temporary Method Docstring """
     if value is None:
-        return Quoted("")
+        return ""
     return Quoted(str(value))
 
 def quoted_presenter(dumper: Dumper, data: Any) -> ScalarNode:
@@ -107,8 +107,8 @@ def main():
     web_argument_group = argparse.add_argument_group("web", description="")
     web_argument_group.add_argument("--web_password", "-p", type=str, required=False)
     web_argument_group.add_argument("--web_tls", "-t", type=validate_bool_str, required=False)
-    web_argument_group.add_argument("--web_cert_path", "-c", type=validate_file, required=False)
-    web_argument_group.add_argument("--web_key_path", "-k", type=validate_file, required=False)
+    web_argument_group.add_argument("--web_cert_path", "-c", type=str, required=False)
+    web_argument_group.add_argument("--web_key_path", "-k", type=str, required=False)
     web_argument_group.add_argument("--web_trusted_proxy", "-b", nargs='+', type=validate_ip_str, required=False)
     web_argument_group.add_argument("--web_broadcast_address", "-B", type=validate_ip_str, required=False)
     rcon_argument_group = argparse.add_argument_group("rcon", description="")
@@ -118,7 +118,7 @@ def main():
     rcon_argument_group.add_argument("--rcon_timeout", "-T", type=validate_int, required=False)
     rcon_argument_group.add_argument("--rcon_sync_interval", "-s", type=validate_int, required=False)
     save_argument_group = argparse.add_argument_group("save", description="")
-    save_argument_group.add_argument("--save_path", "-d", type=validate_directory_exists, required=False)
+    save_argument_group.add_argument("--save_path", "-d", type=str, required=False)
     save_argument_group.add_argument("--save_decode_path", "-D", type=validate_file_exists, required=False)
     save_argument_group.add_argument("--save_sync_interval", "-S", type=validate_int, required=False)
     args: Namespace = argparse.parse_args()
@@ -140,8 +140,13 @@ def main():
         yaml_data["web"]["password"] = Quoted(args.web_password)
     if args.web_tls is not None:
         yaml_data["web"]["tls"] = args.web_tls
-    if args.web_trusted_proxy is not None:
-        yaml_data["web"]["trusted_proxy"] = args.web_trusted_proxy
+    if args.web_trusted_proxy is not None and isinstance(args.web_trusted_proxy, list):
+        print(f"typeof args.web_trusted_proxy : {type(args.web_trusted_proxy)}")
+        print(f"       {args.web_trusted_proxy}")
+        yaml_data["web"]["trusted_proxies"] = args.web_trusted_proxy
+    elif args.web_trusted_proxy is not None:
+        print(f"typeof args.web_trusted_proxy : {type(args.web_trusted_proxy)}")
+        print(f"       {args.web_trusted_proxy}")
     if args.web_broadcast_address is not None and isinstance(args.web_broadcast_address, list) and len(args.web_broadcast_address) > 0:
         yaml_data["web"]["broadcast_address"] = args.web_broadcast_address
     if args.web_cert_path is not None:

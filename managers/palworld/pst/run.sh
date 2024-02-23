@@ -16,10 +16,21 @@ pst_exit_code=-1
 
 main_function() {
   cd "${script_directory}" || exit 1
-  python3 "${script_directory}/setup_config.py" --rcon_address "${INTERNAL_IP}" --io "${script_directory}/config.yaml"
+  #python3 "${script_directory}/setup_config.py" --rcon_address "${INTERNAL_IP}" --rcon_port 11003 --save_path "http://${SERVER_IP}:12003/sync" --io "${script_directory}/config.yaml"
 
   "${script_directory}/pst" &
   pst_exit_code=$?
+  sleep 100
+  pid=$(pgrep pst)
+
+  if [[ "${pid:-false}" != "false" ]]; then
+    echo -e "Started"
+  fi
+
+  while [[ "${pid:-false}" != "false" ]]; do
+    pid=$(pgrep pst)
+    sleep 5000
+  done
 
   echo -e "Stopped"
 }
