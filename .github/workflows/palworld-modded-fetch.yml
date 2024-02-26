@@ -84,7 +84,40 @@ jobs:
             }
 
             If ($Data.Documentation -lt $Data.Current) {
-              $SelectedString = ((Get-Content $InFilePath|Select-String -Pattern "\[([^\]]+)\]\((https:\/\/[^\)]+)\)" -AllMatches).Matches.Groups|Select-Object @(@{Name="Alt";Expression={$Item = $_;Return @(($Item|Where-Object{$Group=($_ | Get-Member).Name;If($Group -Contains "Groups"){Return $True};Return $False}).Groups[1].Value)}},@{Name="Uri";Expression={$Item=$_;Return @(($Item|Where-Object{$Group=($_|Get-Member).Name;If($Group -Contains "Groups"){Return $True};Return $False}).Groups[2].Value)}})|Where-Object{If($Null -eq $_ -or $Null -eq $_.Uri){Return $False};Return $_.Uri.EndsWith("winmm.zip")});
+              Function Select-UrlString {
+                Param([System.String]$Path)
+                $Content = (Get-Content -Path $Path -Raw);
+                $_Matches = ($Content | Select-String -Pattern "\[([^\]]+)\]\((https:\/\/[^\)]+)\)" -AllMatches))
+                $Groups = $_Matches.Matches.Groups;
+                $Property_Alt = @{
+                  Name="Alt";
+                  Expression={
+                    $Item = $_;
+                    $_Groups = ($Item | Where-Object {
+                      Return (($_ | Get-Member).Name -contains "Groups");
+                    };
+                    Return @($_Groups.Groups[1].Value);
+                  }
+                };
+                $Property_Uri = @{
+                  Name="Uri";
+                  Expression={
+                    $Item = $_;
+                    $_Groups = ($Item | Where-Object {
+                      Return (($_ | Get-Member).Name -contains "Groups");
+                    };
+                    Return @($_Groups.Groups[2].Value);
+                  }
+                };
+                $Uri = ($Groups | Select-Object @($Property_Alt, $Property_Uri) | Where-Object {
+                  If ($Null -eq $_ -or $Null -eq $_.Uri) {
+                    Return $False
+                  };
+                  Return $_.Uri.EndsWith("winmm.zip")
+                });
+                Return $Uri
+              }
+              $SelectedString = (Select-UrlString -Path $InFilePath);
               If ($Null -ne $SelectedString) {
                 $DownloadLink = $SelectString.Url;
               } Else {
