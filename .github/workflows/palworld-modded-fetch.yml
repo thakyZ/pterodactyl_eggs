@@ -107,6 +107,7 @@ jobs:
             }
           } Catch {
             Write-Error -Message "Failed to run PowerShell task. Exiting...";
+            Write-Error -Message $_.Exception.Message -Exception $_.Exception;
             Exit 1;
           }
           Write-Output "DoUpdate=1" >> $Env:GITHUB_OUTPUT
