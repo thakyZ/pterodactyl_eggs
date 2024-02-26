@@ -59,7 +59,10 @@ jobs:
             $Data = @{ Documentation = $Null; Current = $Null; };
 
             Push-Location -Path $DocumentationDir;
-            $GitLogDataDocumentation = $(git log -1 --pretty="format:%ct" "$($InFilePath)")
+            $GitLogDataDocumentation = $(git log -1 --pretty="format:%ct" "$($InFilePath)");
+            if ([System.String]::IsNullOrEmpty($GitLogDataDocumentation) -or $GitLogDataDocumentation -eq "") {
+              Throw "The command ``git log -1 --pretty=`"format:%ct`" `"$($InFilePath)`` did not return a valid date.`n`$GitLogDataDocumentation = `"$GitLogDataDocumentation`"";
+            }
             $Data.Documentation = [System.DateTimeOffset]::Parse("$($GitLogDataDocumentation)");
             Pop-Location;
 
