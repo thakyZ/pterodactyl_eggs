@@ -63,12 +63,12 @@ jobs:
             if ([System.String]::IsNullOrEmpty($GitLogDataDocumentation) -or $GitLogDataDocumentation -eq "") {
               Throw "The command ``git log -1 --pretty=`"format:%ct`" `"$($InFilePath)`` did not return a valid date.`n`$GitLogDataDocumentation = `"$GitLogDataDocumentation`"";
             }
-            $Data.Documentation = [System.DateTimeOffset]::Parse("$($GitLogDataDocumentation)");
+            $Data.Documentation = [System.DateTimeOffset]::FromUnixTimeSeconds("$($GitLogDataDocumentation)");
             Pop-Location;
 
             Push-Location -Path $CurrentDir;
             $GitLogDataCurrent = $(git log -1 --pretty="format:%ct" "$($OutFilePath)")
-            $Data.Current = [System.DateTimeOffset]::Parse("$($GitLogDataCurrent)");
+            $Data.Current = [System.DateTimeOffset]::FromUnixTimeSeconds("$($GitLogDataCurrent)");
             Pop-Location;
 
             If ($env:DEBUG -eq $True) {
