@@ -98,7 +98,7 @@ jobs:
                   Throw "Failed to Invoke-WebRequest, got status code $($Web.StatusCode)";
                 }
               } Catch {
-                Write-Host -ForgreoundColor Red -Message "Failed to download file from `"$($DownloadLink)`".`n$($_.Exception.Message)`n$($_.Exception.StackTrace)" | Out-Host;
+                Write-Host -ForegroundColor Red -Message "Failed to download file from `"$($DownloadLink)`".`n$($_.Exception.Message)`n$($_.Exception.StackTrace)" | Out-Host;
                 Write-Error -Message $_.Exception.Message -Exception $_.Exception | Out-Host;
                 Throw;
               }
@@ -107,7 +107,7 @@ jobs:
               Exit 0;
             }
           } Catch {
-            Write-Host -ForgreoundColor Red -Message "Failed to run PowerShell task. Exiting...`n$($_.Exception.Message)`n$($_.Exception.StackTrace)" | Out-Host;
+            Write-Host -ForegroundColor Red -Message "Failed to run PowerShell task. Exiting...`n$($_.Exception.Message)`n$($_.Exception.StackTrace)" | Out-Host;
             Write-Error -Message $_.Exception.Message -Exception $_.Exception | Out-Host;
             Exit 1;
           }
