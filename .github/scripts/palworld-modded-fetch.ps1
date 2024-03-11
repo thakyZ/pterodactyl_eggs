@@ -4,10 +4,11 @@ Param()
 # cSpell:ignore steamcmd_servers winmm.zip
 
 Begin {
+  Write-Host -Object "`$env:pwsh_DEBUG = $($env:pwsh_DEBUG) & $($env:pwsh_DEBUG.GetType()) & $($env:pwsh_DEBUG -eq $True)";
   If ($env:pwsh_DEBUG -eq $True) {
     $DebugPreference = "Continue"
   }
-
+  Write-Host -Object "`$env:pwsh_VERBOSE = $($env:pwsh_VERBOSE) & $($env:pwsh_VERBOSE.GetType()) & $($env:pwsh_VERBOSE -eq $True)";
   If ($env:pwsh_VERBOSE -eq $True) {
     $VerbosePreference = "Continue"
   }
